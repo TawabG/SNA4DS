@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 understand_mapping.ipynb
+SNA4DSprojectTemplate2021.docx
+SNA4DSprojectTemplate2021.html
+*.csv
