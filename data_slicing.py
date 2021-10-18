@@ -7,9 +7,12 @@ def load_ratings(files):
         partial_ratings = pd.read_csv(file_location, header = None, names = ['CustomerID','Rating', 'Date'], usecols = [0,1, 2])
         partial_ratings['Rating'] = partial_ratings['Rating'].astype(float)
         ratings_df = ratings_df.append(partial_ratings)
+
+    ratings_df = ratings_df.reset_index(drop=True)
     return ratings_df
 
 def map_user_ratings_to_movies(ratings_df):
+    # This function takes 1,5 hours with the fulll dataset on my computer
     df_nan = pd.DataFrame(pd.isnull(ratings_df.Rating))
     df_nan = df_nan[df_nan['Rating'] == True]
     df_nan = df_nan.reset_index()
@@ -58,6 +61,10 @@ def trim_ratings_data_by_percentile(df, movies_percentile=0.7, users_percentile=
 if __name__ == '__main__':
     files = ['../combined_data_1.txt', '../combined_data_2.txt', '../combined_data_3.txt', '../combined_data_4.txt']
     ratings_df = load_ratings(files)
+
+    # realiseer je dat het uitvoeren van deze functie 6-8 GB aan werkgeheugen kost en over 100.000.000 ratings loopt dus lang duurt
+    map_user_ratings_to_movies(ratings_df)
+    
 
     print(ratings_df.head())
 
