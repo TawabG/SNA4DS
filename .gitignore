@@ -130,8 +130,7 @@ dmypy.json
 
 # Dylan files
 understand_mapping.ipynb
-full data file with movieID.csv
-edge_list.csv
-first_150_movie_ratings.csv
-node_list.csv
-test.txt
+SNA4DSprojectTemplate2021.docx
+SNA4DSprojectTemplate2021.html
+*.csv
+*.xlsx
