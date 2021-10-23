@@ -127,6 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Dylan files
 understand_mapping.ipynb
 SNA4DSprojectTemplate2021.docx
 SNA4DSprojectTemplate2021.html
