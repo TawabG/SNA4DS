@@ -44,6 +44,15 @@ affiliation:
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("r-references.bib")
+source("same_size_ggplot.R")
+library(ggplot2)
+library(dplyr)
+library(kableExtra)
+library(scales)
+library(gridExtra)
+library(lubridate)
+library(nycflights13)
+library(tidyquant)
 ```
 
 ```{r analysis-preferences, include = FALSE}
@@ -106,30 +115,65 @@ In this dataset, we can easily see connections between users and movies, but not
 ## Methodology
 
 ### Dataset 
-(about 500 words) 1 POINT (+ BONUS)
-*	Which data set are you going to use? Three options:
+During this study, the data that was shared by Netflix during the Netflix Prize open competition is used. The competition was about developing the best algorithm to predict user ratings for content on Netflix. The contest was started in order to improve their recommender system.
 
-o	Use readily/easily available data (0 bonus points)
+The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. Also, the date the rating that was given and the year of the movie release are included in the dataset. Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period. (REF: KAGGLE) The initial dataset contains about 100 million ratings from over 480k users on almost 18k movies. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
 
-o	Combine two or more existing datasets (max 0.5 bonus points)
+In order to answer research questions about liking behaviour of customers on streaming platforms (such as Netflix) this dataset provides us with a great opportunity. The dataset contains a unusual amount of real, user generated data. Datasets with similar types of data usually contain a lot less data and the large dataset is thus very useful in order to answer research questions about liking behaviour. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
 
-o	Scrape or collect your own data (max. 1 bonus point)
+As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. We could interpret the effect of the algorithm as a effect caused by user behaviour.
 
-*	Clearly explain where the data is coming from:
+#### Descriptives
+```{r, echo=FALSE, warning=FALSE}
+data <- read.csv("reviews_winter_2001_2002.csv")
 
-o	Who collected the data?
+sum_data <- summary(data)
+kable(sum_data)%>% kable_styling(position = "center")
+```
 
-o	What is the source?
+Looking at the average Rating of the users in the data, the avarage rating they gave was about a $3,36$.
+```{r, echo=FALSE, warning=FALSE}
+sum <- do.call(data.frame, 
+               list(mean = apply(data[3], 2, mean),
+                    sd = apply(data[3], 2, sd),
+                    min = apply(data[3], 2, min),
+                    max = apply(data[3], 2, max),
+                    n = apply(data[3], 2, length)))
+    
+kable(sum)%>% kable_styling(position = "center")
+```
 
-o	When was the data produced?
+```{r, echo=FALSE, warning=FALSE}
+data$Date_conv <- as.Date(data$Date)
+data$day_of_week <- wday(data$Date_conv, label = TRUE, abbr = FALSE)
+```
 
-o	How was the data collected?
+```{r, echo=FALSE, warning=FALSE}
+per_day <- table(data$Date_conv)
+```
 
-*	Provide descriptive measures of your data (tables, plots, etc.)
 
-*	Why is this data useful to study your topic and answer your research questions?
+Looking at the histogram of the amound of ratings given on a certain date we can see that a peak in ratings exists always in the middle of the week (around wednesday/thursday). Looking at the distribution of the ratings over time we don't see great differences. Over time, people give consistent ratings.
 
-*	What is the potential bias in the data? How does this affect your results?
+```{r, fig.height=8, fig.width=12, echo=FALSE, warning=FALSE}
+p1 <- ggplot(data, aes(x = Date_conv, fill=day_of_week)) +
+    geom_histogram(binwidth=0.5) + 
+    scale_x_date(breaks=date_breaks(width="14 day")) + 
+    xlab("Date") + ylab("Count ratings") +
+    labs(title="Histogram of the amount of ratings given over time", fill="Day") +
+    scale_fill_discrete(labels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+
+p2 <- ggplot(data, aes(x = Date_conv, group = as.factor(Rating), fill = as.factor(Rating))) + 
+    stat_bin(binwidth=0.5, position = "fill") +
+    scale_x_date(breaks=date_breaks(width="14 day")) + 
+    xlab("Date") + ylab("Ratings (proportion)") +
+    labs(title="Distribution of ratings per day over time", fill="Rating")
+
+# Here we use a self made function that is in a separate Rscript file.
+same.size.ggplot(c("p1", "p2"), "p2")
+
+grid.arrange(p1, p2, ncol=1)
+```
 
 ### Data analysis (Research Rationale)
 (about 500 words) – 1 POINTS
