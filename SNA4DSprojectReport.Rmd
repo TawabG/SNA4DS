@@ -189,11 +189,20 @@ methods you chose better for this case?
 ## Results
 (about 2000 words)
 
-### Model 1
+### QAP Model
 (about 1000 words) – 2.5 POINTS
 
+#### Constructing data and the model
+During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
+
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $
+
+#### Results
 *	Present your results appropriately (plots, tables…) and discuss your findings 
 in plain English
+
+#### Findings in relation to hypothesis
+
 
 *	Discuss the meaning of your findings in relation to your hypothesis. (half of
 the points evaluated in this other part)
