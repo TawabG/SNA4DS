@@ -1,18 +1,8 @@
 ---
-title: "The title"
+title: "Netflix case study: Genre vs decade"
 author:
-- name: First Author
-  affiliation: '1'
-  corresponding: yes
-  address: Postal address
-  email: my@email.com
-  role:
-  - Conceptualization
-  - Writing - Original Draft Preparation
-  - Writing - Review & Editing
-- name: Ernst-August Doelle
-  affiliation: '1,2'
-  role: Writing - Review & Editing
+- name: Alan, Chantal, Dion, Dylan, Suzanne, Tawab
+  role: SNA4DS Group 14 students
 shorttitle: Title
 output:
   html_document:
@@ -187,6 +177,8 @@ methods you chose better for this case?
 
 
 ## Results
+
+### Tawab & Alan
 (about 2000 words)
 
 ### QAP Model
