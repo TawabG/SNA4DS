@@ -101,36 +101,6 @@ During the competition a lot of literature has emerged about the dataset and the
 However, no papers or any other literature can be found on network analysis on this dataset. We like to fill this gap in the literature by analysing the network and network structure that arises from the subset of the data that we will use. 
 [@guillory2011simultaneous] developed an active movie recommendation system for Netflix. They found that a recommender system should not constantly ask questions to a user, because those reduces the user's mental image of how the recommendation system learns, prompting some participants to "lose track of what they were teaching". According to @amershi2014power, this was because users are not always eager to act as simple oracles (repeatedly telling the recommendation system whether they like something or not). This is interesting to take into account for our research, because this would mean that a social network within a movie recommendation system can never be fully exposed. 
 
-### Questions and hypotheses
-In this dataset, we can easily see connections between users and movies, but not between just the users or just the movies. At least not, when we do not include one or the other. 
-
-## Methodology
-
-### Dataset 
-During this study, the data that was shared by Netflix during the Netflix Prize open competition is used. The competition was about developing the best algorithm to predict user ratings for content on Netflix. The contest was started in order to improve their recommender system.
-
-The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. Also, the date the rating that was given and the year of the movie release are included in the dataset. Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period. (REF: KAGGLE) The initial dataset contains about 100 million ratings from over 480k users on almost 18k movies. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
-
-In order to answer research questions about liking behaviour of customers on streaming platforms (such as Netflix) this dataset provides us with a great opportunity. The dataset contains a unusual amount of real, user generated data. Datasets with similar types of data usually contain a lot less data and the large dataset is thus very useful in order to answer research questions about liking behaviour. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
-
-As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. We could interpret the effect of the algorithm as a effect caused by user behaviour.
-
-#### Descriptives
-
-Looking at the histogram of the amount of ratings given on a certain date we can see that a peak in ratings exists always in the middle of the week (around wednesday/thursday). Looking at the distribution of the ratings over time we don't see great differences. Over time, people give consistent ratings.
-arrange(p1, p2, ncol=1)
-
-
-### Data analysis (Research Rationale)
-(about 500 words) – 1 POINTS
-*	Why are these two methods suitable for your data?
-
-*	Why are these two methods suitable for your research questions?
-
-*	Are there other methods to address these questions? If yes, why are the 
-methods you chose better for this case?
-
-
 
 ## Results
 
@@ -138,145 +108,148 @@ methods you chose better for this case?
 
 Wat voor tekst moeten wij hier typen??
 
-### QAP Model
-(about 1000 words) – 2.5 POINTS
-
-#### Constructing data and the model
-During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
-
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula: 
-
-#### Results
-*	Present your results appropriately (plots, tables…) and discuss your findings 
-in plain English
-
-#### Findings in relation to hypothesis
-
-
-*	Discuss the meaning of your findings in relation to your hypothesis. (half of
-the points evaluated in this other part)
-
-
-```{r echo = FALSE, results = 'asis'}
-# table example
-cn <- c("age", "gender", "eyes_col")
-one <- c(7, "M", "BLUE")
-two <- c(8, "F", "BROWN")
-three <- c(8, "M", "GREEN")
-four <- c(7, "F", "PINK")
-
-tab <- rbind(cn, one, two, three, four)
-rownames(tab) <- NULL
-knitr::kable(tab)
-```
-
 
 ### ERGM 
 (about 1000) – 2.5 POINTS
 
-In order to answer this research question, an ERGM model has been used. The netwerk created consists of movies as nodes. Two movies get an undirected edge if at least one user exists that has watched and liked both movies. An important assumption that is made is that a user liked a movie if the user has given a rating of at least four out of five. Next, in order to assess the influence of the release date, the decade of the release date is used. Furthermore, only the main genre of the movies have been used to assess the influence of two movies being watched by one user.
+*What are the effects of the genre and release date on two movies being liked by one user?*
+In order to answer this research question, an ERGM model has been used. The network created consists of movies as nodes. Two movies get an undirected edge if at least one user exists that has watched and liked both movies. An important assumption that is made is that a user liked a movie if the user has given a rating of at least four out of five. Next, in order to assess the influence of the release date, the decade of the release date is used. Furthermore, only the main genre of the movies have been used to assess the influence of two movies being watched by one user.
 
-Homophily is hypothesized for genre and decade. Two movies with the same genre are more likely to have an edge and two movies from the same release decade are more likely to have an edge. Furthermore, the likeliness of an edge is even bigger when a movie has both the same genre and is from the same decade.
+Homophily is hypothesized for genre and decade. Two movies with the same genre are more likely to have an edge and two movies from the same release decade are more likely to have an edge. Furthermore, the likeliness of an edge is even bigger when a movie has both the same genre and is from the same decade. To measure homophily the ERGM term Nodematch has been used. 
 
-#### The Genre
-To start off, the effect of genre on the likelihood of an edge between movies will be explored. 
+#### ERGM Models
+A total of 18 ERGM models have been constructed with 9 different ERGM terms. Such as Nodecov, Absdiff, Nodefactor, Nodematch and Nodemix. A mixture of ERGM terms were required due to the difference in categorical and continuous variables. I.e. decade year and genre. The results from all models can be seen in the figure below. 
 
 
 ```{r model ergm, echo = FALSE}
-el <- read.csv("data_0512/edgelist.csv", header=T, as.is=T)
-attributes <- read.csv("data_0512/nodelist.csv", header=T, as.is=T)
+# NOTE: EVERYTHING COMMENTED OUT DUE TO LONG RUN TIME. BUT KEPT IN DOCUMENT AS PROOF.
+# NOTE: EVERYTHING COMMENTED OUT DUE TO LONG RUN TIME. BUT KEPT IN DOCUMENT AS PROOF.
+# Source: ergm_1.R
+
+#el <- read.csv("data_0512/edgelist.csv", header=T, as.is=T)
+#attributes <- read.csv("data_0512/nodelist.csv", header=T, as.is=T)
 
 # Create network
-net2 <- network::as.network(el, matrix.type="edgelist", directed=F)
+#net2 <- network::as.network(el, matrix.type="edgelist", directed=F)
 
 # Add Node attributes
-net2 <- network::set.vertex.attribute(net2, 'genre', value = attributes$genre)
-net2 <- network::set.vertex.attribute(net2, 'decade', value = attributes$decade)
+#net2 <- network::set.vertex.attribute(net2, 'genre', value = attributes$genre)
+#net2 <- network::set.vertex.attribute(net2, 'decade', value = attributes$decade)
 
 # Add Edge attribute
-net2 <- network::set.edge.attribute(net2, 'number_of_links', value = el$number_of_links)
+#net2 <- network::set.edge.attribute(net2, 'number_of_links', value = el$number_of_links)
 
 # ERGM Statistical analyses (dyadic independent terms)
-#model.01 <- ergm::ergm(net2 ~ edges)
+# <- ergm::ergm(net2 ~ edges)
 #summary(model.01)
 
 #model.01.1 <- ergm::ergm(net2 ~ density) # 10-15min run time
 #summary(model.01.1)
 
-#model.01.2 <- ergm::ergm(net2 ~ triangles) # 5-10min run time
+# <- ergm::ergm(net2 ~ triangles) # 5-10min run time
 #summary(model.01.2)
 
 
+# this term adds one network statistic to the model, 
+# equal to the number of ties incident on each actor beyond the first.
+#model.02 <- ergm::ergm(net2 ~ concurrentties("genre")) # Ca. 5-10min
+#summary(model.02)
+
+#model.03 <- ergm::ergm(net2 ~ absdiffcat("decade"))
+#summary(model.03)
+
+#model.04 <- ergm::ergm(net2 ~ edges + absdiffcat("decade"))
+#summary(model.04)
+
+# Deploy ERGM models to experiment to which extent 
+#   a movie made in a decade increases the probability of a movie being watches
+
+# Nodecov is needed because undirected numeric var
+# This means that an interaction between two dyad-independent terms can be 
+# interpreted the same way as it would be in the corresponding logistic regression for each potential edge
+#model.05 <- ergm::ergm(net2 ~ edges + nodecov("decade")) 
+#summary(model.05)
+
+# absdiff used to measure in terms of distance similarity
+#model.06 <- ergm::ergm(net2 ~ edges + absdiff("decade")) 
+#summary(model.06)
+
+#model.06.1 <- ergm::ergm(net2 ~ edges + absdiffcat("decade")) 
+#summary(model.06.1)
+
+#model.07 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade"))
+#summary(model.07)
+
+#model.08 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade"))
+#summary(model.08)
+
+# Nodefactor definitely used for Genre!
+# Nodematch (Homophily) also used for Genre!
+# Source: https://snanalyst.github.io/SNA4DS_2021_Slides/Lab_ERGM1.html#24
+#model.09 <- ergm::ergm(net2 ~ edges + nodefactor("genre"))
+#(model.09)
+
+#model.10 <- ergm::ergm(net2 ~ edges + nodematch("genre"))
+#summary(model.10)
+
+#model.11 <- ergm::ergm(net2 ~ edges + nodemix("genre", base = c(1)))
+#summary(model.11)
+                      
+#model.12 <- ergm::ergm(net2 ~ edges + nodefactor("genre") + nodematch("genre"))
+#summary(model.12)
+
+#model.13 <- ergm::ergm(net2 ~ edges + nodefactor("genre") + nodematch("genre") + nodemix("genre", base = c(1)))
+#summary(model.13)
+
+
+# Explanatory round (parameter 'diff=TRUE' werkt niet!!)
+#model.12  <- ergm::ergm(net2 ~ edges + nodematch('genre', diff = FALSE) + nodefactor('genre'))
+#summary(model.12)
+
+# Continuous variables With nodefactor added
+#model.14 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade") + nodefactor("genre"))
+# (model.14)
+
+# With nodematch added
+#model.15 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade") + nodematch("genre"))
+#summary(model.15)
+
+# With nodefactor AND nodematch added
+#model.16 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade")+ nodefactor("genre") + nodematch("genre"))
+#summary(model.16)
+
+# With nodefactor, nodematch and nodemix added
+# model.17 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade")+ nodefactor("genre") + nodematch("genre") + nodemix("genre", base = c(1)))
+# summary(model.17)
+
+
+
+
+# Compare multiple models
+# Lower AIC & BIC = better!
+# comparing_models <- texreg::screenreg(list(model.01, model.02, model.03, model.04, model.05, model.06, model.07, model.08, model.09, model.10, model.11, model.12,  model.13, model.14, model.15, model.16, model.17, model.10.1))
+
+
+# export to html
+#texreg::htmlreg(list(model.01, model.02, model.03, model.04, model.05, model.06, model.10, model.11, model.12, model.13, model.14, model.15, model.16, model.17, model.10.1),file='models.html')
+
+
 ```
-#### ERGM Model results
-![an image caption Source: ERGM model results part 1.](ergm_images/model_result1.jpeg)
-![an image caption Source: ERGM model results part 2.](ergm_images/model_result2.jpeg)
-![an image caption Source: ERGM model results part 3.](ergm_images/model_result3.jpeg)
-![an image caption Source: ERGM model results part 3.](ergm_images/model_result4.jpeg)
+#### ERGM Model coefficients result
+![an image caption Source: ERGM model results part 1.](ergm_result/model_result1.jpeg)
+![an image caption Source: ERGM model results part 2.](ergm_result/model_result2.jpeg)
+![an image caption Source: ERGM model results part 3.](ergm_result/model_result3.jpeg)
+![an image caption Source: ERGM model results part 3.](ergm_result/model_result4.jpeg)
+
+*Additonally, this model output can be found in directory "root/ergm_result/models.html".*
+
+In order to find the best performing model, two model selection criteras have been used. The Akaike's Information Critera (AIC) and Bayesian Information Criteria (BIC). The AIC tries to measure high dimensional reality, while BIC selects model among a class of parametric models with different numbers of parameters (mainly in the domain of underfitting).
+As can be seen from the figure, model 2, 3 and 4 yield the lowest AIC and BIC scores. 
+
+These models were then used as input for the MCMC diagnostics and ERGM Goodness Of Fit.
 
 
-* Present your results appropriately (plots, tables…) and discuss your findings 
-in plain English
 
-* Discuss the meaning of your findings in relation to your hypothesis. (half of 
-the points evaluated in this other part)
-
-
-Option to showcase a model:
-
-```{r model 2, echo = FALSE, results = 'asis'}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-knitr::kable(texreg::matrixreg(list(lm.D9, lm.D90)))
-
-
-```
-
-
-Option 3
-
-```{r model 3, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-
-texreg::plotreg(lm.D9)
-
-
-```
-
-
-Option 4
-
-```{r model 4, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-texreg::plotreg(list(lm.D9, lm.D90))
-
-```
 
 
 ## Conclusion

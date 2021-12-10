@@ -108,6 +108,7 @@ summary(model.07)
 
 model.08 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade"))
 summary(model.08)
+SNA4DS::Ef_int(model.08, type = "odds")
 
 # Nodefactor definitely used for Genre!
 # Nodematch (Homophily) also used for Genre!
@@ -126,6 +127,7 @@ summary(model.12)
 
 model.13 <- ergm::ergm(net2 ~ edges + nodefactor("genre") + nodematch("genre") + nodemix("genre", base = c(1)))
 summary(model.13)
+SNA4DS::Ef_int(model.13, type = "odds")
 
 
 # Explanatory round (parameter 'diff=TRUE' werkt niet!!)
@@ -146,6 +148,7 @@ summary(model.15)
 model.16 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") 
                        + absdiffcat("decade")+ nodefactor("genre") + nodematch("genre"))
 summary(model.16)
+SNA4DS::Ef_int(model.16, type = "odds")
 
 # With nodefactor, nodematch and nodemix added
 model.17 <- ergm::ergm(net2 ~ edges 
@@ -176,7 +179,7 @@ texreg::htmlreg(list(model.01, model.02, model.03,
                      model.07, model.08, model.09,
                      model.10, model.11, model.12,
                      model.13, model.14, model.15,
-                     model.16, model.17, model.10.1),file='models.doc')
+                     model.16, model.17, model.10.1),file='models.html')
 
 
 
@@ -201,7 +204,20 @@ ergm::mcmc.diagnostics(model.04.best)
 ## Goodness-of-fit for minimum geodesic distance
 ## Goodness-of-fit for model statistics
 model.04.best.gof <- ergm::gof(model.04.best)
+
+sink(file = 'best_model_gof.txt')
 model.04.best.gof
+sink()
 
 
 
+
+# Odds Ratio
+# OR > 1 means greater odds of association with the exposure and outcome.
+# OR = 1 means there is no association between exposure and outcome.
+# OR < 1 means there is a lower odds of association between the exposure and outcome
+SNA4DS::Ef_int(model.04.best, type = "odds")
+
+
+# Probabilities
+SNA4DS::Ef_int(model.04.best, type = "prob")
