@@ -3,7 +3,7 @@ title: "Netflix case study: Genre vs decade"
 author:
 - name: Alan, Chantal, Dion, Dylan, Suzanne, Tawab
   role: SNA4DS Group 14 students
-shorttitle: Title
+shorttitle: Research Project Report
 output:
   html_document:
     df_print: paged
@@ -26,9 +26,9 @@ documentclass: apa6
 classoption: man
 affiliation:
 - id: '1'
-  institution: Wilhelm-Wundt-University
+  institution: Eindhoven University of Technology
 - id: '2'
-  institution: Konstanz Business School
+  institution: Tilburg University
 ---
 
 ```{r setup, include = FALSE}
@@ -174,7 +174,17 @@ grid.arrange(p1, p2, ncol=1)
 *	Are there other methods to address these questions? If yes, why are the 
 methods you chose better for this case?
 
+#### QAP
+QAP generates graphs based on the permutation of an actually observed graph. This maintains some of the 
+structure of the original graph and stays closer to the "nature" of the observed network. 
+It is not meant to generate networks, but to generate the empirical distribution of a statistic, under a null hypothesis. FROM slides 
 
+#### ERGM
+Many metrics like density and centrality are used to describe the structural characteristics of an observed network. These metrics, on the other hand, describe the observed network, which is just one of many possible alternative networks. The structural characteristics of this group of alternative networks may or may not be similar. A statistical model must consider the set of all possible alternative networks weighted in their similarity to an observed network to credit a statistical inference about the processes that influence the formation of network structures. 
+
+Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation, allow inference about the relative frequency of theoretically important network substructures, eliminate ambiguities in the influence of confounding processes, efficiently represent complex structures, and link local-level processes with global-level properties. For example, degree-preserving randomization is a method of considering an observed network in terms of multiple alternative networks. 
+
+Exponential Random Graph models (ERGM) is a powerful technique for conducting statistical inference on network data. ERGM is a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. That makes it a suitable method for our research question, because .... AANVULLEN
 
 ## Results
 
