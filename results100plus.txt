@@ -1,0 +1,67 @@
+> liked <- read.csv("C:/Users/s169096/Documents/Master JADS/Semester 2.1/SNA4DS/lmatrix_f_divr100plus.csv", sep=",", row.names=1)
+> disliked <- read.csv("C:/Users/s169096/Documents/Master JADS/Semester 2.1/SNA4DS/dmatrix_f_divr100plus.csv", sep=",",row.names=1)
+> MoviesCor2 <- sna::netlm(y = disliked, x = liked, mode="graph", nullhyp = 'qapspp', reps = 1000)
+> summary(MoviesCor2)
+
+OLS Network Model
+
+Residuals:
+        0%        25%        50%        75%       100% 
+-12.029353  -6.525862  -2.378062   3.758205  92.231650 
+
+Coefficients:
+            Estimate   Pr(<=b) Pr(>=b) Pr(>=|b|)
+(intercept) 6.91614982 1       0       0        
+x1          0.09468894 1       0       0        
+
+Residual standard error: 8.871 on 634499 degrees of freedom
+Multiple R-squared: 0.006349 	Adjusted R-squared: 0.006347 
+F-statistic:  4054 on 1 and 634499 degrees of freedom, p-value:     0 
+
+
+Test Diagnostics:
+
+	Null Hypothesis: qapspp 
+	Replications: 1000 
+	Coefficient Distribution Summary:
+
+       (intercept)       x1
+Min        27.7449 -48.5160
+1stQ       53.0622  -7.3631
+Median     61.5625  -0.3786
+Mean       61.3501  -0.2169
+3rdQ       69.6276   6.9325
+Max        95.8010  37.3833
+
+> MoviesCor3 <- sna::netlm(y = liked, x = disliked, mode="graph", nullhyp = 'qapspp', reps = 1000)
+> summary(MoviesCor3)
+
+OLS Network Model
+
+Residuals:
+         0%         25%         50%         75%        100% 
+-19.0220686  -5.5297453  -0.5297453   4.8725523  44.4702547 
+
+Coefficients:
+            Estimate   Pr(<=b) Pr(>=b) Pr(>=|b|)
+(intercept) 13.9933485 1       0       0        
+x1           0.0670496 1       0       0        
+
+Residual standard error: 7.465 on 634499 degrees of freedom
+Multiple R-squared: 0.006349 	Adjusted R-squared: 0.006347 
+F-statistic:  4054 on 1 and 634499 degrees of freedom, p-value:     0 
+
+
+Test Diagnostics:
+
+	Null Hypothesis: qapspp 
+	Replications: 1000 
+	Coefficient Distribution Summary:
+
+       (intercept)       x1
+Min       427.6007 -42.8043
+1stQ      452.0640  -6.7107
+Median    458.2859   0.3391
+Mean      458.3345   0.5225
+3rdQ      464.4623   8.1611
+Max       485.5872  35.6632
