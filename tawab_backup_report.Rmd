@@ -5,9 +5,9 @@ author:
   role: SNA4DS Group 14 students
 shorttitle: Title
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
   Enter author note here.
@@ -116,56 +116,10 @@ In order to answer research questions about liking behaviour of customers on str
 As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. We could interpret the effect of the algorithm as a effect caused by user behaviour.
 
 #### Descriptives
-```{r, echo=FALSE, warning=FALSE}
-data <- read.csv("reviews_winter_2001_2002.csv")
 
-sum_data <- summary(data)
-kable(sum_data)%>% kable_styling(position = "center")
-```
+Looking at the histogram of the amount of ratings given on a certain date we can see that a peak in ratings exists always in the middle of the week (around wednesday/thursday). Looking at the distribution of the ratings over time we don't see great differences. Over time, people give consistent ratings.
+arrange(p1, p2, ncol=1)
 
-Looking at the average Rating of the users in the data, the avarage rating they gave was about a $3,36$.
-```{r, echo=FALSE, warning=FALSE}
-sum <- do.call(data.frame, 
-               list(mean = apply(data[3], 2, mean),
-                    sd = apply(data[3], 2, sd),
-                    min = apply(data[3], 2, min),
-                    max = apply(data[3], 2, max),
-                    n = apply(data[3], 2, length)))
-    
-kable(sum)%>% kable_styling(position = "center")
-```
-
-```{r, echo=FALSE, warning=FALSE}
-data$Date_conv <- as.Date(data$Date)
-data$day_of_week <- wday(data$Date_conv, label = TRUE, abbr = FALSE)
-```
-
-```{r, echo=FALSE, warning=FALSE}
-per_day <- table(data$Date_conv)
-```
-
-
-Looking at the histogram of the amound of ratings given on a certain date we can see that a peak in ratings exists always in the middle of the week (around wednesday/thursday). Looking at the distribution of the ratings over time we don't see great differences. Over time, people give consistent ratings.
-
-```{r, fig.height=8, fig.width=12, echo=FALSE, warning=FALSE}
-p1 <- ggplot(data, aes(x = Date_conv, fill=day_of_week)) +
-    geom_histogram(binwidth=0.5) + 
-    scale_x_date(breaks=date_breaks(width="14 day")) + 
-    xlab("Date") + ylab("Count ratings") +
-    labs(title="Histogram of the amount of ratings given over time", fill="Day") +
-    scale_fill_discrete(labels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
-
-p2 <- ggplot(data, aes(x = Date_conv, group = as.factor(Rating), fill = as.factor(Rating))) + 
-    stat_bin(binwidth=0.5, position = "fill") +
-    scale_x_date(breaks=date_breaks(width="14 day")) + 
-    xlab("Date") + ylab("Ratings (proportion)") +
-    labs(title="Distribution of ratings per day over time", fill="Rating")
-
-# Here we use a self made function that is in a separate Rscript file.
-same.size.ggplot(c("p1", "p2"), "p2")
-
-grid.arrange(p1, p2, ncol=1)
-```
 
 ### Data analysis (Research Rationale)
 (about 500 words) – 1 POINTS
@@ -190,7 +144,7 @@ Wat voor tekst moeten wij hier typen??
 #### Constructing data and the model
 During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
 
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula: 
 
 #### Results
 *	Present your results appropriately (plots, tables…) and discuss your findings 
@@ -228,7 +182,7 @@ Homophily is hypothesized for genre and decade. Two movies with the same genre a
 To start off, the effect of genre on the likelihood of an edge between movies will be explored. 
 
 
-```{r model ergm, echo=FALSE}
+```{r model ergm, echo = FALSE}
 el <- read.csv("data_0512/edgelist.csv", header=T, as.is=T)
 attributes <- read.csv("data_0512/nodelist.csv", header=T, as.is=T)
 
