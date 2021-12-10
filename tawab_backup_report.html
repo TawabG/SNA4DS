@@ -333,14 +333,22 @@ Users of Netflix’s movie recommendation algorithms are frequently given specif
 </div>
 <div id="goodness-of-fit" class="section level4">
 <h4>Goodness of Fit</h4>
-<p>Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of exponential family random graph models. See ergm for more information on these models (Source: <a href="https://cran.r-project.org/web/packages/ergm/ergm.pdf" class="uri">https://cran.r-project.org/web/packages/ergm/ergm.pdf</a>).</p>
-<p>Gof’s output is composed of 4 Parts:</p>
-<ul>
+<p>Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of exponential family random graph models (Source: <a href="https://cran.r-project.org/web/packages/ergm/ergm.pdf" class="uri">https://cran.r-project.org/web/packages/ergm/ergm.pdf</a>).</p>
+<p>The output is composed of 4 Parts:</p>
+<ol style="list-style-type: decimal">
 <li>Goodness-of-fit for degree</li>
 <li>Goodness-of-fit for edgewise shared partner</li>
 <li>Goodness-of-fit for minimum geodesic distance</li>
 <li>Goodness-of-fit for model statistics</li>
-</ul>
+</ol>
+<p>As can be seen from the result,</p>
+<p><em>Result can be found in best_model_gof.txt</em></p>
+</div>
+<div id="odds-ratio-probabilities" class="section level4">
+<h4>Odds Ratio &amp; Probabilities</h4>
+<p>An increase of one number of edges, decreased the log odds with -0.678. And it makes the odds of the effect 0.508 times larger. Odds ratio is below the 1 threshold, which means that there is a lower offs of forming edges in this network.</p>
+<p>Additionally, for each decade year (10,20,30,40,50,60,70 and 80) the log odds increases with approximately 1.137. The odds of the effect increases accordingly to above the 1 threshold. Therefore it is concluded that having a movie made in a later year has a greater odds of multiple users rating the movie.</p>
+<p><em>Result can be found in best_model_odds_ratio.txt &amp; best_model_prob.txt</em></p>
 </div>
 </div>
 </div>
@@ -351,6 +359,7 @@ Users of Netflix’s movie recommendation algorithms are frequently given specif
 <p>Who benefits from your findings?</p>
 <p>What does remain an open problem?</p>
 <p>Can you give suggestions for future work in this area?</p>
+<p>–&gt; Iets met Weighted ERGM. Bijv: GERGM model. En meer features van users/movies.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>

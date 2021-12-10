@@ -268,7 +268,19 @@ The output is composed of 4 Parts:
 3. Goodness-of-fit for minimum geodesic distance
 4. Goodness-of-fit for model statistics
 
+As can be seen from the result, 
 
+*Result can be found in best_model_gof.txt*
+
+
+#### Odds Ratio & Probabilities
+An increase of one number of edges, decreased the log odds with -0.678. And it makes the odds of the effect 0.508 times larger. Odds ratio is below the 1 threshold, which means that there is a lower offs of forming edges in this network.
+
+Additionally, for each decade year (10,20,30,40,50,60,70 and 80) the log odds increases with approximately 1.137. The odds of the effect increases accordingly to above the 1 threshold. Therefore it is concluded that having a movie made in a later year has a greater odds of multiple users rating the movie.
+
+The best performing model has a 3.3% prob. of forming edges. However, decade 70 has 59% of forming an edge and decade 80, 78%. Which is consistent with the OR result.
+
+*Result can be found in best_model_odds_ratio.txt & best_model_prob.txt*
 
 ## Conclusion
 
