@@ -194,7 +194,10 @@ model.04.best <- ergm::ergm(net2 ~ edges + absdiffcat("decade"),
                          MCMLE.maxit = 2,
                          force.main=TRUE))
 
-ergm::mcmc.diagnostics(model.04.best)
+model.04.best.mcmc <- ergm::mcmc.diagnostics(model.04.best)
+sink(file = 'best_model_mcmc_output.txt')
+model.04.best.mcmc
+sink()
 
 
 # Goodness of Fit
@@ -208,6 +211,11 @@ model.04.best.gof <- ergm::gof(model.04.best)
 sink(file = 'best_model_gof.txt')
 model.04.best.gof
 sink()
+
+# ERROR: Error in eval(predvars, data, env) : object 'degree' not found
+model.04.best.gof.test <- ergm::ergm(net2 ~ edges + degree(1))
+model.04.best.gof.test.2 <- ergm::gof(model.04.best.gof.test)
+plot(model.04.best.gof.test.2)
 
 
 

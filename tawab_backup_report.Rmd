@@ -117,8 +117,9 @@ In order to answer this research question, an ERGM model has been used. The netw
 
 Homophily is hypothesized for genre and decade. Two movies with the same genre are more likely to have an edge and two movies from the same release decade are more likely to have an edge. Furthermore, the likeliness of an edge is even bigger when a movie has both the same genre and is from the same decade. To measure homophily the ERGM term Nodematch has been used. 
 
+
 #### ERGM Models
-A total of 18 ERGM models have been constructed with 9 different ERGM terms. Such as Nodecov, Absdiff, Nodefactor, Nodematch and Nodemix. A mixture of ERGM terms were required due to the difference in categorical and continuous variables. I.e. decade year and genre. The results from all models can be seen in the figure below. 
+A total of 18 ERGM models have been constructed with 9 different ERGM terms. These terms are a selection of most popular nodal covariate terms. Such as Nodecov, Absdiff, Nodefactor, Nodematch and Nodemix. A mixture of ERGM terms were required due to the difference in categorical and continuous variables. I.e. decade year and genre. The results from all models can be seen in the figure below. 
 
 
 ```{r model ergm, echo = FALSE}
@@ -246,9 +247,26 @@ A total of 18 ERGM models have been constructed with 9 different ERGM terms. Suc
 In order to find the best performing model, two model selection criteras have been used. The Akaike's Information Critera (AIC) and Bayesian Information Criteria (BIC). The AIC tries to measure high dimensional reality, while BIC selects model among a class of parametric models with different numbers of parameters (mainly in the domain of underfitting).
 As can be seen from the figure, model 2, 3 and 4 yield the lowest AIC and BIC scores. 
 
-These models were then used as input for the MCMC diagnostics and ERGM Goodness Of Fit.
+The best performing was then used as input for the MCMC diagnostics and ERGM Goodness Of Fit.
 
+Estimate parameters using Markov Chains Monte Carlo simulations. A Markov chain is a sequence of random variables that depends upon the value taken by the previous variable. This method then generates a series of graphs that differs from each other by only one edge.
+The sequence of generated graphs, i.e. plots of Markov Chains Monte Carlo diagnostics are seen below.
 
+MCMC sample size has been kept at a relative low number of 500 due to computational time.
+
+![an image caption Source: ERGM model results part 3.](ergm_result/mcmc_diagnostics_1.png)
+![an image caption Source: ERGM model results part 3.](ergm_result/mcmc_diagnostics_2.png)
+![an image caption Source: ERGM model results part 3.](ergm_result/mcmc_diagnostics_3.png)
+
+#### Goodness of Fit
+Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of exponential family random graph models (Source: https://cran.r-project.org/web/packages/ergm/ergm.pdf).
+
+The output is composed of 4 Parts:
+
+1. Goodness-of-fit for degree
+2. Goodness-of-fit for edgewise shared partner
+3. Goodness-of-fit for minimum geodesic distance
+4. Goodness-of-fit for model statistics
 
 
 
@@ -265,6 +283,8 @@ Who benefits from your findings?
 What does remain an open problem?
 
 Can you give suggestions for future work in this area?
+
+--> Iets met Weighted ERGM. Bijv: GERGM model. En meer features van users/movies.
 
 
 
