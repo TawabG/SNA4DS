@@ -3,7 +3,7 @@ title: "Netflix case study: Genre vs decade"
 author:
 - name: Alan, Chantal, Dion, Dylan, Suzanne, Tawab
   role: SNA4DS Group 14 students
-shorttitle: Title
+shorttitle: Research Project Report
 output:
   html_document:
     df_print: paged
@@ -26,9 +26,9 @@ documentclass: apa6
 classoption: man
 affiliation:
 - id: '1'
-  institution: Wilhelm-Wundt-University
+  institution: Eindhoven University of Technology
 - id: '2'
-  institution: Konstanz Business School
+  institution: Tilburg University
 ---
 
 ```{r setup, include = FALSE}
@@ -43,6 +43,7 @@ library(gridExtra)
 library(lubridate)
 library(nycflights13)
 library(tidyquant)
+library(readxl)
 ```
 
 ```{r analysis-preferences, include = FALSE}
@@ -116,12 +117,13 @@ As stated in the initial distribution of the data, Netflix can and will not guar
 #### Descriptives
 ```{r, echo=FALSE, warning=FALSE}
 data <- read.csv("reviews_winter_2001_2002.csv")
+data_genres <- read_excel("movie_movie_connections_node_list_genre.xlsx")
 
-sum_data <- summary(data)
-kable(sum_data)%>% kable_styling(position = "center")
+#sum_data <- summary(data)
+#kable(sum_data)%>% kable_styling(position = "center")
 ```
 
-Looking at the average Rating of the users in the data, the avarage rating they gave was about a $3,36$.
+Looking at the average Rating of the users in the data, the average rating they gave was about a $3,36$.
 ```{r, echo=FALSE, warning=FALSE}
 sum <- do.call(data.frame, 
                list(mean = apply(data[3], 2, mean),
@@ -151,18 +153,30 @@ p1 <- ggplot(data, aes(x = Date_conv, fill=day_of_week)) +
     scale_x_date(breaks=date_breaks(width="14 day")) + 
     xlab("Date") + ylab("Count ratings") +
     labs(title="Histogram of the amount of ratings given over time", fill="Day") +
-    scale_fill_discrete(labels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+    scale_fill_discrete(labels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")) +
+    theme_minimal()
 
 p2 <- ggplot(data, aes(x = Date_conv, group = as.factor(Rating), fill = as.factor(Rating))) + 
     stat_bin(binwidth=0.5, position = "fill") +
     scale_x_date(breaks=date_breaks(width="14 day")) + 
     xlab("Date") + ylab("Ratings (proportion)") +
-    labs(title="Distribution of ratings per day over time", fill="Rating")
+    labs(title="Distribution of ratings per day over time", fill="Rating") +
+    theme_minimal()
 
 # Here we use a self made function that is in a separate Rscript file.
 same.size.ggplot(c("p1", "p2"), "p2")
 
 grid.arrange(p1, p2, ncol=1)
+```
+
+The genres in the data were determined using Amazone Prime. The first genre that Amazone Prime displayed is taken as the genre of the movie. As the genres that were displayed in Amazone Prime were not on alfabethic order, we assume that the first genre given is the main genre. 20 genres were found in the Netflix dataset. Most of the movies had *comedy* or *drama* as genre.
+
+```{r, fig.height=4, fig.width=12}
+ggplot(data_genres, aes(genre)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.3), 
+          panel.background = element_rect(fill = "white")
+          )
 ```
 
 ### Data analysis (Research Rationale)
@@ -174,7 +188,17 @@ grid.arrange(p1, p2, ncol=1)
 *	Are there other methods to address these questions? If yes, why are the 
 methods you chose better for this case?
 
+#### QAP
+QAP generates graphs based on the permutation of an actually observed graph. This maintains some of the 
+structure of the original graph and stays closer to the "nature" of the observed network. 
+It is not meant to generate networks, but to generate the empirical distribution of a statistic, under a null hypothesis. FROM slides 
 
+#### ERGM
+Many metrics like density and centrality are used to describe the structural characteristics of an observed network. These metrics, on the other hand, describe the observed network, which is just one of many possible alternative networks. The structural characteristics of this group of alternative networks may or may not be similar. A statistical model must consider the set of all possible alternative networks weighted in their similarity to an observed network to credit a statistical inference about the processes that influence the formation of network structures. 
+
+Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation, allow inference about the relative frequency of theoretically important network substructures, eliminate ambiguities in the influence of confounding processes, efficiently represent complex structures, and link local-level processes with global-level properties. For example, degree-preserving randomization is a method of considering an observed network in terms of multiple alternative networks. 
+
+Exponential Random Graph models (ERGM) is a powerful technique for conducting statistical inference on network data. ERGM is a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. That makes it a suitable method for our research question, because .... AANVULLEN
 
 ## Results
 
@@ -311,9 +335,8 @@ Who benefits from your findings?
 
 What does remain an open problem?
 
-Can you give suggestions for future work in this area?
-
-
+***Can you give suggestions for future work in this area?***
+For future research it could be beneficial to dive more into the literature and find out more about what is already known in order to give a stronger reasoning behind the explanatory variables used in the analysis. Also, it would be interesting to look into more recent data as streaming services are widely used nowadays and the variation of users is maybe larger now.
 
 \newpage
 

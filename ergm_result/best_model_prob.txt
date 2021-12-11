@@ -1,0 +1,10 @@
+                  Estimate  Prob Std.Error  Pval
+edges               -0.678 0.337     0.012 0.000
+absdiff.decade.10    0.049 0.512     0.016 0.002
+absdiff.decade.20    0.095 0.524     0.020 0.000
+absdiff.decade.30    0.013 0.503     0.023 0.568
+absdiff.decade.40    0.137 0.534     0.026 0.000
+absdiff.decade.50    0.102 0.525     0.042 0.014
+absdiff.decade.60    0.064 0.516     0.061 0.290
+absdiff.decade.70    0.358 0.589     0.096 0.000
+absdiff.decade.80    1.222 0.772     0.214 0.000
