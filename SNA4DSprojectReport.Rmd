@@ -15,7 +15,7 @@ wordcount: X
 bibliography: r-references.bib
 toc: yes
 toc_float: yes
-floatsintext: no
+floatsintext: yes
 figurelist: no
 tablelist: no
 footnotelist: no
@@ -215,20 +215,50 @@ Exponential Random Graph models (ERGM) is a powerful technique for conducting st
 
 ## Results
 
-### Tawab & Alan
-(about 2000 words)
-
 ### QAP Model
 (about 1000 words) – 2.5 POINTS
 
 #### Constructing data and the model
 During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
 
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula: 
+
+$$weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $$
+
 
 #### Results
-*	Present your results appropriately (plots, tables…) and discuss your findings 
-in plain English
+
+##### More than 120 reviews
+In order to get a feeling of the QAP regression model, and to get initial results in a reasonable amount of time, we first did the analysis on users who had 120 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results120plus.png")
+```
+
+As can be seen from the figure, .....
+
+##### More than 100 reviews
+the analysis on users who had 100 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results100plus.png")
+```
+
+As can be seen from the figure, .....
+
+##### More than 80 reviews
+the analysis on users who had 80 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results80plus.png")
+```
+
+As can be seen from the figure, .....
+
+##### More than 60 reviews
+the analysis on users who had 60 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results60plus.png")
+```
+
+As can be seen from the figure, .....
 
 #### Findings in relation to hypothesis
 
