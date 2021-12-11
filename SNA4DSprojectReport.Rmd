@@ -130,8 +130,9 @@ We used Amazon Prime movie genres to add genres to the dataset for further analy
 
 The large size of the dataset made it difficult to work with and made running analysis models infeasable. 
 Therefore, we decided to only use a selection of the ratings. The dataset has ratings from October 1998 to December 2005. 
-For this analysis, only the data from December 2001, Januari 2002 and februari 2002 is considered. 
+For this analysis, only the data from December 2001, Januari 2002, and februari 2002 are considered. 
 We chose this winter because this is the first time where users started to rate a good amount of movies while the number of ratings still did not completely explode yet.
+
 
 
 
