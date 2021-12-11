@@ -100,8 +100,21 @@ During the competition a lot of literature has emerged about the dataset and the
 However, no papers or any other literature can be found on network analysis on this dataset. We like to fill this gap in the literature by analysing the network and network structure that arises from the subset of the data that we will use. 
 [@guillory2011simultaneous] developed an active movie recommendation system for Netflix. They found that a recommender system should not constantly ask questions to a user, because those reduces the user's mental image of how the recommendation system learns, prompting some participants to "lose track of what they were teaching". According to @amershi2014power, this was because users are not always eager to act as simple oracles (repeatedly telling the recommendation system whether they like something or not). This is interesting to take into account for our research, because this would mean that a social network within a movie recommendation system can never be fully exposed. 
 
-### Questions and hypotheses
-In this dataset, we can easily see connections between users and movies, but not between just the users or just the movies. At least not, when we do not include one or the other. 
+### Research Questions and hypotheses
+In this dataset, we can easily see connections between users and movies, but not between just the users or just the movies. At least not, when we do not include one or the other. That is why we have defined the following research questions:
+
+* RQ1: What are the effects of the genre on the likelihood of having both movies watched by the same user?
+* RQ2: How much does liking the same movies influence disliking the same movies, and vice versa? (In a network of frequent reviewers) 
+
+In order to be able to answer these research questions, we have made set up the following hypothesis accordingly:
+
+* Research Question 1:
+  + Comparable movies, in terms of either genre and/or year, are more often watched by the same user than uncomparable movies.  
+  + Movies of genre horror are generally rated higher than other movie genres.
+* Research Question 2:
+  + Users that like the same movies to a certain degree, are likely to dislike the same movies to that same degree 
+  + Users that dislike the same movies to a certain degree, are likely to like the same movies to that same degree 
+
 
 ## Methodology
 
@@ -334,6 +347,9 @@ address 0.5 POINTS here
 Who benefits from your findings?
 
 What does remain an open problem?
+
+### Discussion
+What remains an open problem, is that we assume that a frequent reviewer gives a rating to a movie after watching it. However, we don’t have information on (re-)viewers that watch a movie but don’t give a rating afterwards. This is difficult to overcome as we simply don’t have data available on this matter.  
 
 ***Can you give suggestions for future work in this area?***
 For future research it could be beneficial to dive more into the literature and find out more about what is already known in order to give a stronger reasoning behind the explanatory variables used in the analysis. Also, it would be interesting to look into more recent data as streaming services are widely used nowadays and the variation of users is maybe larger now.
