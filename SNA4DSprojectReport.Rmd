@@ -15,7 +15,7 @@ wordcount: X
 bibliography: r-references.bib
 toc: yes
 toc_float: yes
-floatsintext: no
+floatsintext: yes
 figurelist: no
 tablelist: no
 footnotelist: no
@@ -43,6 +43,7 @@ library(gridExtra)
 library(lubridate)
 library(nycflights13)
 library(tidyquant)
+library(readxl)
 ```
 
 ```{r analysis-preferences, include = FALSE}
@@ -99,8 +100,21 @@ During the competition a lot of literature has emerged about the dataset and the
 However, no papers or any other literature can be found on network analysis on this dataset. We like to fill this gap in the literature by analysing the network and network structure that arises from the subset of the data that we will use. 
 [@guillory2011simultaneous] developed an active movie recommendation system for Netflix. They found that a recommender system should not constantly ask questions to a user, because those reduces the user's mental image of how the recommendation system learns, prompting some participants to "lose track of what they were teaching". According to @amershi2014power, this was because users are not always eager to act as simple oracles (repeatedly telling the recommendation system whether they like something or not). This is interesting to take into account for our research, because this would mean that a social network within a movie recommendation system can never be fully exposed. 
 
-### Questions and hypotheses
-In this dataset, we can easily see connections between users and movies, but not between just the users or just the movies. At least not, when we do not include one or the other. 
+### Research Questions and hypotheses
+In this dataset, we can easily see connections between users and movies, but not between just the users or just the movies. At least not, when we do not include one or the other. That is why we have defined the following research questions:
+
+* RQ1: What are the effects of the genre on the likelihood of having both movies watched by the same user?
+* RQ2: How much does liking the same movies influence disliking the same movies, and vice versa? (In a network of frequent reviewers) 
+
+In order to be able to answer these research questions, we have made set up the following hypothesis accordingly:
+
+* Research Question 1:
+  + Comparable movies, in terms of either genre and/or year, are more often watched by the same user than uncomparable movies.  
+  + Movies of genre horror are generally rated higher than other movie genres.
+* Research Question 2:
+  + Users that like the same movies to a certain degree, are likely to dislike the same movies to that same degree 
+  + Users that dislike the same movies to a certain degree, are likely to like the same movies to that same degree 
+
 
 ## Methodology
 
@@ -129,12 +143,13 @@ We could interpret the effect of the algorithm as a effect caused by user behavi
 #### Descriptives
 ```{r, echo=FALSE, warning=FALSE}
 data <- read.csv("reviews_winter_2001_2002.csv")
+data_genres <- read_excel("movie_movie_connections_node_list_genre.xlsx")
 
-sum_data <- summary(data)
-kable(sum_data)%>% kable_styling(position = "center")
+#sum_data <- summary(data)
+#kable(sum_data)%>% kable_styling(position = "center")
 ```
 
-Looking at the average Rating of the users in the data, the avarage rating they gave was about a $3,36$.
+Looking at the average Rating of the users in the data, the average rating they gave was about a $3,36$.
 ```{r, echo=FALSE, warning=FALSE}
 sum <- do.call(data.frame, 
                list(mean = apply(data[3], 2, mean),
@@ -164,18 +179,30 @@ p1 <- ggplot(data, aes(x = Date_conv, fill=day_of_week)) +
     scale_x_date(breaks=date_breaks(width="14 day")) + 
     xlab("Date") + ylab("Count ratings") +
     labs(title="Histogram of the amount of ratings given over time", fill="Day") +
-    scale_fill_discrete(labels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+    scale_fill_discrete(labels = c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")) +
+    theme_minimal()
 
 p2 <- ggplot(data, aes(x = Date_conv, group = as.factor(Rating), fill = as.factor(Rating))) + 
     stat_bin(binwidth=0.5, position = "fill") +
     scale_x_date(breaks=date_breaks(width="14 day")) + 
     xlab("Date") + ylab("Ratings (proportion)") +
-    labs(title="Distribution of ratings per day over time", fill="Rating")
+    labs(title="Distribution of ratings per day over time", fill="Rating") +
+    theme_minimal()
 
 # Here we use a self made function that is in a separate Rscript file.
 same.size.ggplot(c("p1", "p2"), "p2")
 
 grid.arrange(p1, p2, ncol=1)
+```
+
+The genres in the data were determined using Amazone Prime. The first genre that Amazone Prime displayed is taken as the genre of the movie. As the genres that were displayed in Amazone Prime were not on alfabethic order, we assume that the first genre given is the main genre. 20 genres were found in the Netflix dataset. Most of the movies had *comedy* or *drama* as genre.
+
+```{r, fig.height=4, fig.width=12}
+ggplot(data_genres, aes(genre)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.3), 
+          panel.background = element_rect(fill = "white")
+          )
 ```
 
 ### Data analysis (Research Rationale)
@@ -201,20 +228,50 @@ Exponential Random Graph models (ERGM) is a powerful technique for conducting st
 
 ## Results
 
-### Tawab & Alan
-(about 2000 words)
-
 ### QAP Model
 (about 1000 words) – 2.5 POINTS
 
 #### Constructing data and the model
 During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
 
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula: 
+
+$$weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $$
+
 
 #### Results
-*	Present your results appropriately (plots, tables…) and discuss your findings 
-in plain English
+
+##### More than 120 reviews
+In order to get a feeling of the QAP regression model, and to get initial results in a reasonable amount of time, we first did the analysis on users who had 120 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results120plus.png")
+```
+
+As can be seen from the figure, .....
+
+##### More than 100 reviews
+the analysis on users who had 100 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results100plus.png")
+```
+
+As can be seen from the figure, .....
+
+##### More than 80 reviews
+the analysis on users who had 80 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results80plus.png")
+```
+
+As can be seen from the figure, .....
+
+##### More than 60 reviews
+the analysis on users who had 60 reviews (like and dislike) or more. The results are shown in the figure below. 
+```{r echo = FALSE}
+knitr::include_graphics("results60plus.png")
+```
+
+As can be seen from the figure, .....
 
 #### Findings in relation to hypothesis
 
@@ -334,9 +391,11 @@ Who benefits from your findings?
 
 What does remain an open problem?
 
-Can you give suggestions for future work in this area?
+### Discussion
+What remains an open problem, is that we assume that a frequent reviewer gives a rating to a movie after watching it. However, we don’t have information on (re-)viewers that watch a movie but don’t give a rating afterwards. This is difficult to overcome as we simply don’t have data available on this matter.  
 
-
+***Can you give suggestions for future work in this area?***
+For future research it could be beneficial to dive more into the literature and find out more about what is already known in order to give a stronger reasoning behind the explanatory variables used in the analysis. Also, it would be interesting to look into more recent data as streaming services are widely used nowadays and the variation of users is maybe larger now.
 
 \newpage
 
