@@ -133,6 +133,16 @@ Therefore, we decided to only use a selection of the ratings. The dataset has ra
 For this analysis, only the data from December 2001, Januari 2002, and februari 2002 are considered. 
 We chose this winter because this is the first time where users started to rate a good amount of movies while the number of ratings still did not completely explode yet.
 
+To answer our two research questions we had to transform our data further in two different ways. 
+For the first research question, the network is defined as movies for the nodes and the movies have an edge between them if there is an user that likes both movies.
+Liking a movie is defined as a user giving a 4 or 5 rating for a movie. 
+Of course, modelling the network this way means that movies that are highly rated are always connect.
+Therefore, the network only included movies that have between 20 and 50 ratings. 
+That means that our analysis only concerns niche movies with a small number of ratings.
+Moreover, there is a lower threshold too to make sure that we only include movies that have at least a few connections.
+All in all, the network is just under 500 nodes and the attributes for the nodes are the year of release of the movie and the main movie genre that comes from Amazon Prime.
+
+
 
 
 
