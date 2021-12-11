@@ -105,13 +105,26 @@ In this dataset, we can easily see connections between users and movies, but not
 ## Methodology
 
 ### Dataset 
-During this study, the data that was shared by Netflix during the Netflix Prize open competition is used. The competition was about developing the best algorithm to predict user ratings for content on Netflix. The contest was started in order to improve their recommender system.
+The dataset that is being used during this study is provided by Netflix. 
+Netflix shared this data for the Netflix Prize competition where people could use the data to improve their recomender system for movies.
+The data includes ratings for 17770 movies from 480189 users. 
+During this study, the data that was shared by Netflix during the Netflix Prize open competition is used. 
+The competition was about developing the best algorithm to predict user ratings for content on Netflix. 
+The contest was started in order to improve their recommender system.
 
-The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. Also, the date the rating that was given and the year of the movie release are included in the dataset. Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period. (REF: KAGGLE) The initial dataset contains about 100 million ratings from over 480k users on almost 18k movies. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
+The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. 
+Also, the date the rating that was given and the year of the movie release are included in the dataset. 
+Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period. (REF: KAGGLE) 
+The initial dataset contains about 100 million ratings from over 480k users on almost 18k movies. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
 
-In order to answer research questions about liking behaviour of customers on streaming platforms (such as Netflix) this dataset provides us with a great opportunity. The dataset contains a unusual amount of real, user generated data. Datasets with similar types of data usually contain a lot less data and the large dataset is thus very useful in order to answer research questions about liking behaviour. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
+In order to answer research questions about liking behaviour of customers on streaming platforms (such as Netflix) this dataset provides us with a great opportunity. 
+The dataset contains a unusual amount of real, user generated data. 
+Datasets with similar types of data usually contain a lot less data and the large dataset is thus very useful in order to answer research questions about liking behaviour. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
 
-As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. We could interpret the effect of the algorithm as a effect caused by user behaviour.
+As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. 
+As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. 
+Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. 
+We could interpret the effect of the algorithm as a effect caused by user behaviour.
 
 #### Descriptives
 ```{r, echo=FALSE, warning=FALSE}
