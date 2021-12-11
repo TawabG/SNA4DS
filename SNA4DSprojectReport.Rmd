@@ -119,7 +119,7 @@ In order to be able to answer these research questions, we have made set up the 
 ## Methodology
 
 ### Dataset 
-The primary dataset that is being used during this study is provided by Netflix. 
+The primary dataset that is being used during this study is provided by Netflix  (REF: KAGGLE) . 
 Netflix shared this data for the Netflix Prize competition where people could use the data to improve their recomender system for movies.
 The data includes ratings for 17770 movies from 480189 users. 
 In total, it contains around 24 million ratings on a scale from one to five and the date of the rating.
@@ -128,19 +128,12 @@ This was too little information about the movies for our project.
 Therefore, we decided to look for an additional data source to enrich the dataset. 
 We used Amazon Prime movie genres to add genres to the dataset for further analysis.
 
-The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. 
-Also, the date the rating that was given and the year of the movie release are included in the dataset. 
-Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period. (REF: KAGGLE) 
-The initial dataset contains about 100 million ratings from over 480k users on almost 18k movies. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
+The large size of the dataset made it difficult to work with and made running analysis models infeasable. 
+Therefore, we decided to only use a selection of the ratings. The dataset has ratings from October 1998 to December 2005. 
+For this analysis, only the data from December 2001, Januari 2002 and februari 2002 is considered. 
+We chose this winter because this is the first time where users started to rate a good amount of movies while the number of ratings still did not completely explode yet.
 
-In order to answer research questions about liking behaviour of customers on streaming platforms (such as Netflix) this dataset provides us with a great opportunity. 
-The dataset contains a unusual amount of real, user generated data. 
-Datasets with similar types of data usually contain a lot less data and the large dataset is thus very useful in order to answer research questions about liking behaviour. (REF: Matrix Factorization and Neighbor Based Algorithms for the Netflix Prize Problem)
 
-As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. 
-As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. 
-Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. 
-We could interpret the effect of the algorithm as a effect caused by user behaviour.
 
 #### Descriptives
 ```{r, echo=FALSE, warning=FALSE}
