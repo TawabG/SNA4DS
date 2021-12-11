@@ -1,10 +1,11 @@
 ---
-title: "Netflix case study: Genre vs decade"
+title: 'Netflix case study: Genre vs decade'
 author:
 - name: Alan, Chantal, Dion, Dylan, Suzanne, Tawab
   role: SNA4DS Group 14 students
 shorttitle: Research Project Report
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 authornote: |
@@ -221,16 +222,18 @@ ggplot(data_genres, aes(genre)) +
 methods you chose better for this case?
 
 #### QAP
-QAP generates graphs based on the permutation of an actually observed graph. This maintains some of the 
-structure of the original graph and stays closer to the "nature" of the observed network. 
-It is not meant to generate networks, but to generate the empirical distribution of a statistic, under a null hypothesis. FROM slides 
+In general, QAP is very interesting, when you have two or more networks and wants to compare those. In addition, we also choose QAP regression, since we thought it would be interesting to use this model, based on its permutation of actually observed graphs and therefore staying closer to the nature of our networks. 
+
+There are three different QAP models from which one had to be chosen for our data and research question. The first is the simple QAP test where you measure the association between two networks. Furthermore, there is a QAP linear model, which can be used on a valued dependent network and one or more explanatory networks. Finally, there is the QAP logistic model, which differs from the linear model, in terms of a binary-valued dependent network. 
+
+Our weights in our network are not binary so the logistic model is not an option for us. Even though, we only have two networks we decided to go for the linear model since we would like to see if we could “explain” the first network with the second and vice versa.   
 
 #### ERGM
 Many metrics like density and centrality are used to describe the structural characteristics of an observed network. These metrics, on the other hand, describe the observed network, which is just one of many possible alternative networks. The structural characteristics of this group of alternative networks may or may not be similar. A statistical model must consider the set of all possible alternative networks weighted in their similarity to an observed network to credit a statistical inference about the processes that influence the formation of network structures. 
 
-Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation, allow inference about the relative frequency of theoretically important network substructures, eliminate ambiguities in the influence of confounding processes, efficiently represent complex structures, and link local-level processes with global-level properties. For example, degree-preserving randomization is a method of considering an observed network in terms of multiple alternative networks. 
+Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation and allow inference about the relative frequency of theoretically important network substructures. Exponential Random Graph Models (ERGM) help with this. 
 
-Exponential Random Graph models (ERGM) is a powerful technique for conducting statistical inference on network data. ERGM is a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. That makes it a suitable method for our research question, because .... AANVULLEN
+Using ERGMs is a powerful technique for conducting statistical inference on network data. ERGMs are a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. 
 
 ## Results
 
@@ -238,66 +241,60 @@ Exponential Random Graph models (ERGM) is a powerful technique for conducting st
 (about 1000 words) – 2.5 POINTS
 
 #### Constructing data and the model
-During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
+During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset. 
 
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula: 
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula:  
 
-$$weight = \frac{no. of mutual liked movies}{max(no. of liked movies)} $$
+$$weight = max((\frac{no. of mutual liked movies}{
+no. of liked movies})*100) $$
 
 
 #### Results
+We have generated results for different (filtered) versions of the dataset. The results are explained and shown below.
 
 ##### More than 120 reviews
-In order to get a feeling of the QAP regression model, and to get initial results in a reasonable amount of time, we first did the analysis on users who had 120 reviews (like and dislike) or more. The results are shown in the figure below. 
+In order to get a feeling of the QAP regression model, and to get initial results in a reasonable amount of time, we first did the analysis on users who had 120 reviews in total(like and dislike) or more. The results are shown in the figure below. 
 ```{r echo = FALSE}
 knitr::include_graphics("results120plus.png")
 ```
 
-As can be seen from the figure, .....
+As can be seen from the figure, the QAP regression model explains only 6% of the variation in the like/dislike interaction network for movies when looking at liked movie ratings. When looking at disliked movie ratings, it becomes even less: 4%. 
 
 ##### More than 100 reviews
-the analysis on users who had 100 reviews (like and dislike) or more. The results are shown in the figure below. 
+Next, we decreased the filter threshold for the number of ratings that users have given in the dataset. This increased the amount of datapoints in the dataset. So, we had a dataset with users who had 100 reviews in total (like and dislike) or more, and ran the analysis. The results are shown in the figure below.  
+
 ```{r echo = FALSE}
 knitr::include_graphics("results100plus.png")
 ```
 
-As can be seen from the figure, .....
+As can be seen from the figure, the QAP regression model explains only 9% of the variation in the like/dislike interaction network for movies when looking at liked movie ratings. When looking at disliked movie ratings, it becomes even less: 6%. 
 
 ##### More than 80 reviews
-the analysis on users who had 80 reviews (like and dislike) or more. The results are shown in the figure below. 
+Because of the improved results in the last section, we decreased the filter threshold for the number of ratings that users have given in the dataset even more. This again increased the amount of datapoints in the dataset, and we did the analysis on users who had 80 reviews in total (like and dislike) or more. The results are shown in the figure below. 
+
 ```{r echo = FALSE}
 knitr::include_graphics("results80plus.png")
 ```
 
-As can be seen from the figure, .....
+As can be seen from the figure, the QAP regression model explains 14% of the variation in the like/dislike interaction network for movies when looking at liked movie ratings. When looking at disliked movie ratings, it again becomes a bit less: 10,4%. 
 
 ##### More than 60 reviews
-the analysis on users who had 60 reviews (like and dislike) or more. The results are shown in the figure below. 
+For the last time, we decreased the filter threshold for the number of ratings that users have given in the dataset. This also increased the amount of datapoints in the dataset, and we ran the analysis on users who had 80 reviews in total (like and dislike) or more. The results are shown in the figure below. 
+
 ```{r echo = FALSE}
 knitr::include_graphics("results60plus.png")
 ```
 
-As can be seen from the figure, .....
+As can be seen from the figure, the QAP regression model explains 17% of the variation in the like/dislike interaction network for movies when looking at liked movie ratings. When looking at disliked movie ratings, the model can explain 13% of the variation. Th finally gave us the feeling that we are building somewhat meaningful models. 
+
+We even wanted to go a step further and decrease the filter threshold for the number of ratings that users have given to 40. But this would yield a dataset that was too large to analyse, as it costs 25+ hours to run an analysis on it. 
+ 
 
 #### Findings in relation to hypothesis
 
+When relating our findings to our aforementioned hypothesis, we see that it is possible to build models that somewhat can explain the variance in the network in a significant way. However, we can clearly see that more data is not always giving better explanations. 
 
-*	Discuss the meaning of your findings in relation to your hypothesis. (half of
-the points evaluated in this other part)
-
-
-```{r echo = FALSE, results = 'asis'}
-# table example
-cn <- c("age", "gender", "eyes_col")
-one <- c(7, "M", "BLUE")
-two <- c(8, "F", "BROWN")
-three <- c(8, "M", "GREEN")
-four <- c(7, "F", "PINK")
-
-tab <- rbind(cn, one, two, three, four)
-rownames(tab) <- NULL
-knitr::kable(tab)
-```
+Also, it very interesting to see that liking movies says more about which movies you might dislike, than vice versa. An explanation for this might be that we saw in the data that there were more positive ratings than negative ratings, which could explain that disliking defines a more specific taste that is better detectable.  
 
 
 ### ERGM 
