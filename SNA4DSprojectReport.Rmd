@@ -119,12 +119,14 @@ In order to be able to answer these research questions, we have made set up the 
 ## Methodology
 
 ### Dataset 
-The dataset that is being used during this study is provided by Netflix. 
+The primary dataset that is being used during this study is provided by Netflix. 
 Netflix shared this data for the Netflix Prize competition where people could use the data to improve their recomender system for movies.
 The data includes ratings for 17770 movies from 480189 users. 
-During this study, the data that was shared by Netflix during the Netflix Prize open competition is used. 
-The competition was about developing the best algorithm to predict user ratings for content on Netflix. 
-The contest was started in order to improve their recommender system.
+In total, it contains around 24 million ratings on a scale from one to five and the date of the rating.
+For the movies, the dataset only contains the title of the movie and the year it was released.
+This was too little information about the movies for our project. 
+Therefore, we decided to look for an additional data source to enrich the dataset. 
+We used Amazon Prime movie genres to add genres to the dataset for further analysis.
 
 The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. 
 Also, the date the rating that was given and the year of the movie release are included in the dataset. 
