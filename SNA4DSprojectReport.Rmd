@@ -9,10 +9,10 @@ author:
 - name: Tawab Ghorbandi
 shorttitle: "SNA4DS Research Project Report - Team 14"
 output:
-  papaja::apa6_pdf: default
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
+  papaja::apa6_pdf: default
 keywords: keywords
 wordcount: X
 bibliography: r-references.bib
@@ -34,8 +34,9 @@ affiliation:
   institution: Eindhoven University of Technology
 - id: '3'
   institution: Tilburg University
+- id: '4'
+  institution: Utrecht University
 ---
-
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("r-references.bib")
@@ -58,36 +59,13 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
 
-
-# Citations in papaja, detele appropriately later
-
-Add the bibtex entry in the .bib file. You can find the entries in Google scholar, 
-but double check since it is not always correct. 
-
-Call the citations in the text:
-
-Citation within parentheses	[@R-papaja]
-
-Multiple citations	[@R-papaja; @R-base]
-
-In-text citations	@R-papaja
-
-Year only	[-@R-base]
-
-Only if your citation appears in the text it will also show up in the Reference 
-list. Don't manually modify the Reference list.
-
 ## Executive Summary 
 
-(150 words) – 0.3 POINTS
-Summarize the report. Write this as the very last thing.
+In this research a light was shed on the question what the effects of genre on the likelihood of having two movies of the same genre watched is and how much liking the same movies would influence disliking the same movies (and vice versa).
 
-What is the main topic you are addressing?
+Using a dataset with all movie reviews of the streaming site Netflix in the winter of 2001/2002 extended with own collected data about movie genres and release year, these questions were answered with a network perspective. Using QAP and ERGM the network of movie ratings by users are analysed.
 
-what are your research questions and hypotheses?  
-
-what are your results and the main conclusion?
-
+It was found that homophily in both genre and the decade a movie came out were good predictors of an individual liking both movies. It was found that liking a movies was a better predictor for disliking movies compared to the effect the other way around.
 
 
 ## Introduction 
@@ -120,36 +98,22 @@ In order to be able to answer these research questions, we have made set up the 
   + Users that like the same movies to a certain degree, are likely to dislike the same movies to that same degree 
   + Users that dislike the same movies to a certain degree, are likely to like the same movies to that same degree 
 
-
 ## Methodology
 
 ### Dataset 
-The primary dataset that is being used during this study is provided by Netflix  (REF: KAGGLE) . 
-Netflix shared this data for the Netflix Prize competition where people could use the data to improve their recomender system for movies.
-The data includes ratings for 17770 movies from 480189 users. 
-In total, it contains around 24 million ratings on a scale from one to five and the date of the rating.
-For the movies, the dataset only contains the title of the movie and the year it was released.
-This was too little information about the movies for our project. 
-Therefore, we decided to look for an additional data source to enrich the dataset. 
-We used Amazon Prime movie genres to add genres to the dataset for further analysis.
+During this study, the data that was shared by Netflix during the Netflix Prize open competition is used. The competition was about developing the best algorithm to predict user ratings for content on Netflix. The contest was started in order to improve their recommender system.
 
-The large size of the dataset made it difficult to work with and made running analysis models infeasable. 
-Therefore, we decided to only use a selection of the ratings. The dataset has ratings from October 1998 to December 2005. 
-For this analysis, only the data from December 2001, Januari 2002, and februari 2002 are considered. 
-We chose this winter because this is the first time where users started to rate a good amount of movies while the number of ratings still did not completely explode yet.
+The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. Also, the date the rating that was given and the year of the movie release are included in the dataset. Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period. (REF: KAGGLE) The initial dataset contains about 24 million ratings from over 480k users on almost 18k movies. [@takacs2008matrix]
 
-To answer our two research questions we had to transform our data further in two different ways. 
-For the first research question, the network is defined as movies for the nodes and the movies have an edge between them if there is an user that likes both movies.
-Liking a movie is defined as a user giving a 4 or 5 rating for a movie. 
-Of course, modelling the network this way means that movies that are highly rated are always connect.
-Therefore, the network only included movies that have between 20 and 50 ratings. 
-That means that our analysis only concerns niche movies with a small number of ratings.
-Moreover, there is a lower threshold too to make sure that we only include movies that have at least a few connections.
-All in all, the network is just under 500 nodes and the attributes for the nodes are the year of release of the movie and the main movie genre that comes from Amazon Prime.
+For the movies, the dataset only contains the title of the movie and the year it was released. This was too little information about the movies for our project. Therefore, we decided to look for an additional data source to enrich the dataset. We used Amazon Prime movie genres to add genres to the dataset for further analysis.
 
+The large size of the dataset made it difficult to work with and made running analysis models infeasable. Therefore, we decided to only use a selection of the ratings. The dataset has ratings from October 1998 to December 2005. For this analysis, only the data from December 2001, Januari 2002, and februari 2002 are considered. We chose this winter because this is the first time where users started to rate a good amount of movies while the number of ratings still did not completely explode yet.
 
+To answer our two research questions we had to transform our data further in two different ways. For the first research question, the network is defined as movies for the nodes and the movies have an edge between them if there is an user that likes both movies. Liking a movie is defined as a user giving a 4 or 5 rating for a movie. Of course, modelling the network this way means that movies that are highly rated are always connect. Therefore, the network only included movies that have between 20 and 50 ratings. That means that our analysis only concerns niche movies with a small number of ratings. Moreover, there is a lower threshold too to make sure that we only include movies that have at least a few connections. All in all, the network is just under 500 nodes and the attributes for the nodes are the year of release of the movie and the main movie genre that comes from Amazon Prime.
 
+In order to answer research questions about liking behaviour of customers on streaming platforms (such as Netflix) this dataset provides us with a great opportunity. The dataset contains a unusual amount of real, user generated data. Datasets with similar types of data usually contain a lot less data and the large dataset is thus very useful in order to answer research questions about liking behaviour. [@takacs2008matrix]
 
+As stated in the initial distribution of the data, Netflix can and will not guarantee the correctness of the data. As no perfect documentation of the data collection exists, this can cause inaccuracies in the results. Also, Netflix uses algorithms that determine what users see and this effect can influence the results of this research. We could interpret the effect of the algorithm as a effect caused by user behaviour.
 
 #### Descriptives
 ```{r, echo=FALSE, warning=FALSE}
@@ -208,7 +172,7 @@ grid.arrange(p1, p2, ncol=1)
 
 The genres in the data were determined using Amazone Prime. The first genre that Amazone Prime displayed is taken as the genre of the movie. As the genres that were displayed in Amazone Prime were not on alfabethic order, we assume that the first genre given is the main genre. 20 genres were found in the Netflix dataset. Most of the movies had *comedy* or *drama* as genre.
 
-```{r, fig.height=4, fig.width=12}
+```{r, fig.height=4, fig.width=12, echo=FALSE, warning=FALSE}
 ggplot(data_genres, aes(genre)) +
     geom_bar() +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.3), 
@@ -217,13 +181,6 @@ ggplot(data_genres, aes(genre)) +
 ```
 
 ### Data analysis (Research Rationale)
-
-#### ERGM
-Many metrics like density and centrality are used to describe the structural characteristics of an observed network. These metrics, on the other hand, describe the observed network, which is just one of many possible alternative networks. The structural characteristics of this group of alternative networks may or may not be similar. A statistical model must consider the set of all possible alternative networks weighted in their similarity to an observed network to credit a statistical inference about the processes that influence the formation of network structures. 
-
-Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation and allow inference about the relative frequency of theoretically important network substructures. Exponential Random Graph Models (ERGM) help with this. 
-
-Using ERGMs is a powerful technique for conducting statistical inference on network data. ERGMs are a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. 
 
 #### QAP
 In general, QAP is very interesting, when you have two or more networks and wants to compare those. In addition, we also choose QAP regression, since we thought it would be interesting to use this model, based on its permutation of actually observed graphs and therefore staying closer to the nature of our networks. 
@@ -234,18 +191,21 @@ Our weights in our network are not binary so the logistic model is not an option
 
 As QAP is the only method (to our knowledge) that is able to compare two networks to each other, there aren't any other methods available to address the second research question.
 
+#### ERGM
+Many metrics like density and centrality are used to describe the structural characteristics of an observed network. These metrics, on the other hand, describe the observed network, which is just one of many possible alternative networks. The structural characteristics of this group of alternative networks may or may not be similar. A statistical model must consider the set of all possible alternative networks weighted in their similarity to an observed network to credit a statistical inference about the processes that influence the formation of network structures. 
+
+Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation, allow inference about the relative frequency of theoretically important network substructures, eliminate ambiguities in the influence of confounding processes, efficiently represent complex structures, and link local-level processes with global-level properties. For example, degree-preserving randomization is a method of considering an observed network in terms of multiple alternative networks. 
+
+Exponential Random Graph models (ERGM) is a powerful technique for conducting statistical inference on network data. ERGM is a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. That makes it a suitable method for our research question, because .... AANVULLEN
+
 ## Results
 
 ### QAP Model
 
 #### Constructing data and the model
-During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset. 
+During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
 
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula:  
-
-$$weight = max((\frac{no. of mutual liked movies}{
-no. of liked movies})*100) $$
-
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = \frac{no. of mutual liked movies}{max(no. of liked movies)}$
 
 #### Results
 We have generated results for different (filtered) versions of the dataset. The results are explained and shown below.
@@ -292,11 +252,9 @@ We even wanted to go a step further and decrease the filter threshold for the nu
 
 When relating our findings to our aforementioned hypothesis, we see that it is possible to build models that somewhat can explain the variance in the network in a significant way. However, we can clearly see that more data is not always giving better explanations. 
 
-Also, it very interesting to see that liking movies says more about which movies you might dislike, than vice versa. An explanation for this might be that we saw in the data that there were more positive ratings than negative ratings, which could explain that disliking defines a more specific taste that is better detectable.  
-
+Also, it very interesting to see that liking movies says more about which movies you might dislike, than vice versa. An explanation for this might be that we saw in the data that there were more positive ratings than negative ratings, which could explain that disliking defines a more specific taste that is better detectable.
 
 ### ERGM 
-(about 1000) – 2.5 POINTS
 
 In order to answer research question 1, an ERGM model has been used. The network created consists of movies as nodes. Two movies get an undirected edge if at least one user exists that has watched and liked both movies. An important assumption that is made is that a user liked a movie if the user has given a rating of at least four out of five. Next, in order to assess the influence of the release date, the decade of the release date is used. Furthermore, only the main genre of the movies have been used to assess the influence of two movies being watched by one user.
 
@@ -462,7 +420,6 @@ The best performing model has a 3.3% prob. of forming edges. However, decade 70 
 It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed. 
 The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users’ taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.
 
-
 ## Conclusion
 
 (about 350 words) – 0.7 POINTS
@@ -471,12 +428,19 @@ What were your topic and research questions again? (1 sentence)
 What did you learn from the two analysis you run? *** most important point to 
 address 0.5 POINTS here
 
-Who benefits from your findings?
+### QAP
 
-What does remain an open problem?
+For the QAP model on the Netflix dataset the following research question was answered, namely “How much does liking the same movies influence disliking the same movies, and vice versa?”. For the second model, the users were the main focus instead of the movies.  
 
-### Discussion
+Netflix could have benefited from the insights derived by the research for their recommender systems back then. Even though old data is used, this could be replicated for more recent data. The insights gained were that networks on more enthusiastic reviewers do not give a clearer picture of their movie's taste. In addition, liking movies says more about which movies are possibly disliked, than vice versa.  
+
+What remains an open problem would be to combine the movie genres in the user networks to give extra insights, connected to the first research question.
+
+**Who benefits from your findings?**
+
+**What does remain an open problem?**
 What remains an open problem, is that we assume that a frequent reviewer gives a rating to a movie after watching it. However, we don’t have information on (re-)viewers that watch a movie but don’t give a rating afterwards. This is difficult to overcome as we simply don’t have data available on this matter.  
+
 
 ***Can you give suggestions for future work in this area?***
 For future research it could be beneficial to dive more into the literature and find out more about what is already known in order to give a stronger reasoning behind the explanatory variables used in the analysis. Also, it would be interesting to look into more recent data as streaming services are widely used nowadays and the variation of users is maybe larger now.
