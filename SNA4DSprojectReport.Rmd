@@ -1,5 +1,5 @@
 ---
-title: 'Genre vs year: analysis and evaluation of netflix winter 2001-2002 dataset'
+title: 'Genre vs year: analysis and evaluation of the Netflix winter 2001-2002 dataset'
 author:
 - name: Alan Kreher
 - name: Chantal van de Luijtgaarden
@@ -9,9 +9,9 @@ author:
 - name: Tawab Ghorbandi
 shorttitle: "SNA4DS Research Project Report - Team 14"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
   papaja::apa6_pdf: default
 keywords: keywords
 wordcount: X
@@ -70,7 +70,7 @@ It was found that homophily in both genre and the decade a movie came out were g
 
 ## Introduction 
 ### Main topic
-In this paper, we are going to study the presence of social networks within a movie streaming platform. We're focusing on the structure of links among a group of social players, which consist of users watching and rating movies on Netflix.  
+In this paper, we are going to study the presence of social networks within a movie streaming platform. We are focusing on the structure of links among a group of social players, which consist of users watching and rating movies on Netflix.  
 Users of Netflix's movie recommendation algorithms are frequently given specific questions about their interests for certain items (which they provide by liking or disliking them, for example). These choices are then immediately integrated into the underlying learning system for future suggestions. If a recommender system starts promoting unwanted products after incorporating new preferences, the user may try to steer the system in the future by correcting it or supplying alternate preference information. 
 
 ### Importance
@@ -196,7 +196,7 @@ Many metrics like density and centrality are used to describe the structural cha
 
 Network data, on the other hand, violates the independence and identical distribution assumptions of statistical models like linear regression because they are inherently relational. Alternative statistical models must reflect the uncertainty associated with a given observation, allow inference about the relative frequency of theoretically important network substructures, eliminate ambiguities in the influence of confounding processes, efficiently represent complex structures, and link local-level processes with global-level properties. For example, degree-preserving randomization is a method of considering an observed network in terms of multiple alternative networks. 
 
-Exponential Random Graph models (ERGM) is a powerful technique for conducting statistical inference on network data. ERGM is a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. That makes it a suitable method for our research question, because .... AANVULLEN
+Exponential Random Graph models (ERGM) is a powerful technique for conducting statistical inference on network data. ERGM is a good choice as a network modelling framework for cases where the outcome of interest is in the presence or absence of edges. That makes it a suitable method for our research question, because this question is focused to explain the structure of a network of movies with a specific genre and decade year.
 
 ## Results
 
@@ -383,9 +383,9 @@ A total of 18 ERGM models have been constructed with 9 different ERGM terms. The
 ![an image caption Source: ERGM model results part 2.](ergm_result/model_result2.jpeg)
 ![an image caption Source: ERGM model results part 3.](ergm_result/model_result3.jpeg)
 ![an image caption Source: ERGM model results part 4.](ergm_result/model_result4.jpeg)
-*Additonally, this model output can be found in directory "root/ergm_result/models.html".*
+*This model output can be found in directory "root/ergm_result/models.html".*
 
-In order to find the best performing model, two model selection criteras have been used. The Akaike's Information Critera (AIC) and Bayesian Information Criteria (BIC). The AIC tries to measure high dimensional reality, while BIC selects model among a class of parametric models with different numbers of parameters (mainly in the domain of underfitting).
+In order to find the best performing model, two model selection criteras have been used. The Akaike's Information Criteria (AIC) and Bayesian Information Criteria (BIC). The AIC tries to measure high dimensional reality, while BIC selects model among a class of parametric models with different numbers of parameters (mainly in the domain of underfitting).
 As can be seen from the figure, model 2, 3 and 4 yield the lowest AIC and BIC scores. 
 
 The best performing was then used as input for the MCMC diagnostics and ERGM Goodness Of Fit.
@@ -397,8 +397,8 @@ The sequence of generated graphs, i.e. plots of Markov Chains Monte Carlo diagno
 ![an image caption Source: MCMC Diagnostics part 2.](ergm_result/mcmc_diagnostics_2.png)
 ![an image caption Source: MCMC Diagnostics part 3.](ergm_result/mcmc_diagnostics_3.png)
 
-#### Goodness of Fit (NOG AFMAKEN!!)
-Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of exponential family random graph models (Source: https://cran.r-project.org/web/packages/ergm/ergm.pdf).
+#### Goodness of Fit
+Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of ERGM models. 
 
 The output is composed of 4 Parts:
 
@@ -407,7 +407,7 @@ The output is composed of 4 Parts:
 3. Goodness-of-fit for minimum geodesic distance
 4. Goodness-of-fit for model statistics
 
-As can be seen from the result... 
+As can be seen from the result all terms used within the model follow a moderately normal distribution centered around a mean of zero. The trace plots contain comparable results. These plots show that the distribution is well calibrated as the MCMC algorithm runs.
 
 #### Odds Ratio & Probabilities
 An increase of one number of edges, decreased the log odds with -0.678. And it makes the odds of the effect 0.508 times larger. Odds ratio is below the 1 threshold, which means that there is a lower offs of forming edges in this network.
@@ -416,17 +416,8 @@ Additionally, for each decade year (10,20,30,40,50,60,70 and 80) the log odds in
 
 The best performing model has a 3.3% prob. of forming edges. However, decade 70 has 59% of forming an edge and decade 80, 78%. Which is consistent with the OR result.
 
-#### ERGM Conclusion 
-It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed. 
-The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users’ taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.
 
 ## Conclusion
-
-(about 350 words) – 0.7 POINTS
-What were your topic and research questions again? (1 sentence)
-
-What did you learn from the two analysis you run? *** most important point to 
-address 0.5 POINTS here
 
 ### QAP
 
@@ -434,15 +425,23 @@ For the QAP model on the Netflix dataset the following research question was ans
 
 Netflix could have benefited from the insights derived by the research for their recommender systems back then. Even though old data is used, this could be replicated for more recent data. The insights gained were that networks on more enthusiastic reviewers do not give a clearer picture of their movie's taste. In addition, liking movies says more about which movies are possibly disliked, than vice versa.  
 
+**What does remain an open problem?**
+
 What remains an open problem would be to combine the movie genres in the user networks to give extra insights, connected to the first research question.
 
-**Who benefits from your findings?**
+### ERGM
+It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed. 
+The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users’ taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.
+
+
 
 **What does remain an open problem?**
+
 What remains an open problem, is that we assume that a frequent reviewer gives a rating to a movie after watching it. However, we don’t have information on (re-)viewers that watch a movie but don’t give a rating afterwards. This is difficult to overcome as we simply don’t have data available on this matter.  
 
 
-***Can you give suggestions for future work in this area?***
+### Future work
+
 For future research it could be beneficial to dive more into the literature and find out more about what is already known in order to give a stronger reasoning behind the explanatory variables used in the analysis. Also, it would be interesting to look into more recent data as streaming services are widely used nowadays and the variation of users is maybe larger now.
 
 \newpage
