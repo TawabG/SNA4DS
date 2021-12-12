@@ -1,5 +1,5 @@
 ---
-title: 'Netflix case study: Genre vs decade'
+title: 'Genre vs year: analysis and evaluation of netflix winter 2001-2002 dataset'
 author:
 - name: Alan Kreher
 - name: Chantal van de Luijtgaarden
@@ -298,86 +298,169 @@ Also, it very interesting to see that liking movies says more about which movies
 ### ERGM 
 (about 1000) – 2.5 POINTS
 
+In order to answer research question 1, an ERGM model has been used. The network created consists of movies as nodes. Two movies get an undirected edge if at least one user exists that has watched and liked both movies. An important assumption that is made is that a user liked a movie if the user has given a rating of at least four out of five. Next, in order to assess the influence of the release date, the decade of the release date is used. Furthermore, only the main genre of the movies have been used to assess the influence of two movies being watched by one user.
 
-* Present your results appropriately (plots, tables…) and discuss your findings 
-in plain English
+Homophily is hypothesized for genre and decade. Two movies with the same genre are more likely to have an edge and two movies from the same release decade are more likely to have an edge. Furthermore, the likeliness of an edge is even bigger when a movie has both the same genre and is from the same decade. To measure homophily the ERGM term Nodematch has been used. 
 
-* Discuss the meaning of your findings in relation to your hypothesis. (half of 
-the points evaluated in this other part)
 
-Option 1: 
+#### ERGM Models
+A total of 18 ERGM models have been constructed with 9 different ERGM terms. These terms are a selection of most popular nodal covariate terms. Such as Nodecov, Absdiff, Nodefactor, Nodematch and Nodemix. A mixture of ERGM terms were required due to the difference in categorical and continuous variables. I.e. decade year and genre. The results from all models can be seen in the figure below. 
 
-```{r model 1, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
+```{r model ergm, echo = FALSE}
+# NOTE: EVERYTHING COMMENTED OUT DUE TO LONG RUN TIME. BUT KEPT IN DOCUMENT AS PROOF.
+# NOTE: EVERYTHING COMMENTED OUT DUE TO LONG RUN TIME. BUT KEPT IN DOCUMENT AS PROOF.
+# Source: ergm_1.R
 
-# install.packages("texreg")
+#el <- read.csv("data_0512/edgelist.csv", header=T, as.is=T)
+#attributes <- read.csv("data_0512/nodelist.csv", header=T, as.is=T)
 
-knitr::kable(texreg::matrixreg(lm.D9))
+# Create network
+#net2 <- network::as.network(el, matrix.type="edgelist", directed=F)
+
+# Add Node attributes
+#net2 <- network::set.vertex.attribute(net2, 'genre', value = attributes$genre)
+#net2 <- network::set.vertex.attribute(net2, 'decade', value = attributes$decade)
+
+# Add Edge attribute
+#net2 <- network::set.edge.attribute(net2, 'number_of_links', value = el$number_of_links)
+
+# ERGM Statistical analyses (dyadic independent terms)
+# <- ergm::ergm(net2 ~ edges)
+#summary(model.01)
+
+#model.01.1 <- ergm::ergm(net2 ~ density) # 10-15min run time
+#summary(model.01.1)
+
+# <- ergm::ergm(net2 ~ triangles) # 5-10min run time
+#summary(model.01.2)
+
+
+# this term adds one network statistic to the model, 
+# equal to the number of ties incident on each actor beyond the first.
+#model.02 <- ergm::ergm(net2 ~ concurrentties("genre")) # Ca. 5-10min
+#summary(model.02)
+
+#model.03 <- ergm::ergm(net2 ~ absdiffcat("decade"))
+#summary(model.03)
+
+#model.04 <- ergm::ergm(net2 ~ edges + absdiffcat("decade"))
+#summary(model.04)
+
+# Deploy ERGM models to experiment to which extent 
+#   a movie made in a decade increases the probability of a movie being watches
+
+# Nodecov is needed because undirected numeric var
+# This means that an interaction between two dyad-independent terms can be 
+# interpreted the same way as it would be in the corresponding logistic regression for each potential edge
+#model.05 <- ergm::ergm(net2 ~ edges + nodecov("decade")) 
+#summary(model.05)
+
+# absdiff used to measure in terms of distance similarity
+#model.06 <- ergm::ergm(net2 ~ edges + absdiff("decade")) 
+#summary(model.06)
+
+#model.06.1 <- ergm::ergm(net2 ~ edges + absdiffcat("decade")) 
+#summary(model.06.1)
+
+#model.07 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade"))
+#summary(model.07)
+
+#model.08 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade"))
+#summary(model.08)
+
+# Nodefactor definitely used for Genre!
+# Nodematch (Homophily) also used for Genre!
+# Source: https://snanalyst.github.io/SNA4DS_2021_Slides/Lab_ERGM1.html#24
+#model.09 <- ergm::ergm(net2 ~ edges + nodefactor("genre"))
+#(model.09)
+
+#model.10 <- ergm::ergm(net2 ~ edges + nodematch("genre"))
+#summary(model.10)
+
+#model.11 <- ergm::ergm(net2 ~ edges + nodemix("genre", base = c(1)))
+#summary(model.11)
+                      
+#model.12 <- ergm::ergm(net2 ~ edges + nodefactor("genre") + nodematch("genre"))
+#summary(model.12)
+
+#model.13 <- ergm::ergm(net2 ~ edges + nodefactor("genre") + nodematch("genre") + nodemix("genre", base = c(1)))
+#summary(model.13)
+
+
+# Explanatory round (parameter 'diff=TRUE' werkt niet!!)
+#model.12  <- ergm::ergm(net2 ~ edges + nodematch('genre', diff = FALSE) + nodefactor('genre'))
+#summary(model.12)
+
+# Continuous variables With nodefactor added
+#model.14 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade") + nodefactor("genre"))
+# (model.14)
+
+# With nodematch added
+#model.15 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade") + nodematch("genre"))
+#summary(model.15)
+
+# With nodefactor AND nodematch added
+#model.16 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade")+ nodefactor("genre") + nodematch("genre"))
+#summary(model.16)
+
+# With nodefactor, nodematch and nodemix added
+# model.17 <- ergm::ergm(net2 ~ edges + nodecov("decade") + absdiff("decade") + absdiffcat("decade")+ nodefactor("genre") + nodematch("genre") + nodemix("genre", base = c(1)))
+# summary(model.17)
+
+
+
+
+# Compare multiple models
+# Lower AIC & BIC = better!
+# comparing_models <- texreg::screenreg(list(model.01, model.02, model.03, model.04, model.05, model.06, model.07, model.08, model.09, model.10, model.11, model.12,  model.13, model.14, model.15, model.16, model.17, model.10.1))
+
+
+# export to html
+#texreg::htmlreg(list(model.01, model.02, model.03, model.04, model.05, model.06, model.10, model.11, model.12, model.13, model.14, model.15, model.16, model.17, model.10.1),file='models.html')
 
 
 ```
 
-Option 2
+![an image caption Source: ERGM model results part 1.](ergm_result/model_result1.jpeg)
+![an image caption Source: ERGM model results part 2.](ergm_result/model_result2.jpeg)
+![an image caption Source: ERGM model results part 3.](ergm_result/model_result3.jpeg)
+![an image caption Source: ERGM model results part 4.](ergm_result/model_result4.jpeg)
+*Additonally, this model output can be found in directory "root/ergm_result/models.html".*
 
-```{r model 2, echo = FALSE, results = 'asis'}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
+In order to find the best performing model, two model selection criteras have been used. The Akaike's Information Critera (AIC) and Bayesian Information Criteria (BIC). The AIC tries to measure high dimensional reality, while BIC selects model among a class of parametric models with different numbers of parameters (mainly in the domain of underfitting).
+As can be seen from the figure, model 2, 3 and 4 yield the lowest AIC and BIC scores. 
 
-# install.packages("texreg")
+The best performing was then used as input for the MCMC diagnostics and ERGM Goodness Of Fit.
 
-knitr::kable(texreg::matrixreg(list(lm.D9, lm.D90)))
+Estimate parameters using Markov Chains Monte Carlo simulations. A Markov chain is a sequence of random variables that depends upon the value taken by the previous variable. This method then generates a series of graphs that differs from each other by only one edge.
+The sequence of generated graphs, i.e. plots of Markov Chains Monte Carlo diagnostics are seen below.
 
+![an image caption Source: MCMC Diagnostics part 1.](ergm_result/mcmc_diagnostics_1.png)
+![an image caption Source: MCMC Diagnostics part 2.](ergm_result/mcmc_diagnostics_2.png)
+![an image caption Source: MCMC Diagnostics part 3.](ergm_result/mcmc_diagnostics_3.png)
 
-```
+#### Goodness of Fit (NOG AFMAKEN!!)
+Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of exponential family random graph models (Source: https://cran.r-project.org/web/packages/ergm/ergm.pdf).
 
+The output is composed of 4 Parts:
 
-Option 3
+1. Goodness-of-fit for degree
+2. Goodness-of-fit for edgewise shared partner
+3. Goodness-of-fit for minimum geodesic distance
+4. Goodness-of-fit for model statistics
 
-```{r model 3, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
+As can be seen from the result... 
 
-# install.packages("texreg")
+#### Odds Ratio & Probabilities
+An increase of one number of edges, decreased the log odds with -0.678. And it makes the odds of the effect 0.508 times larger. Odds ratio is below the 1 threshold, which means that there is a lower offs of forming edges in this network.
 
+Additionally, for each decade year (10,20,30,40,50,60,70 and 80) the log odds increases with approximately 1.137. The odds of the effect increases accordingly to above the 1 threshold. Therefore it is concluded that having a movie made in a later year has a greater odds of multiple users rating the movie.
 
-texreg::plotreg(lm.D9)
+The best performing model has a 3.3% prob. of forming edges. However, decade 70 has 59% of forming an edge and decade 80, 78%. Which is consistent with the OR result.
 
-
-```
-
-
-Option 4
-
-```{r model 4, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-texreg::plotreg(list(lm.D9, lm.D90))
-
-```
+#### ERGM Conclusion 
+It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed. 
+The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users’ taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.
 
 
 ## Conclusion

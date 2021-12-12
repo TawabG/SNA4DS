@@ -95,6 +95,7 @@ summary(model.04)
 # interpreted the same way as it would be in the corresponding logistic regression for each potential edge
 model.05 <- ergm::ergm(net2 ~ edges + nodecov("decade")) 
 summary(model.05)
+SNA4DS::Ef_int(model.05, type = "odds")
 
 # absdiff used to measure in terms of distance similarity
 model.06 <- ergm::ergm(net2 ~ edges + absdiff("decade")) 

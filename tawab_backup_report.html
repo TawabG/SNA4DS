@@ -348,11 +348,16 @@ Users of Netflix’s movie recommendation algorithms are frequently given specif
 <h4>Odds Ratio &amp; Probabilities</h4>
 <p>An increase of one number of edges, decreased the log odds with -0.678. And it makes the odds of the effect 0.508 times larger. Odds ratio is below the 1 threshold, which means that there is a lower offs of forming edges in this network.</p>
 <p>Additionally, for each decade year (10,20,30,40,50,60,70 and 80) the log odds increases with approximately 1.137. The odds of the effect increases accordingly to above the 1 threshold. Therefore it is concluded that having a movie made in a later year has a greater odds of multiple users rating the movie.</p>
-<p><em>Result can be found in best_model_odds_ratio.txt &amp; best_model_prob.txt</em></p>
+<p>The best performing model has a 3.3% prob. of forming edges. However, decade 70 has 59% of forming an edge and decade 80, 78%. Which is consistent with the OR result.</p>
 </div>
 </div>
 </div>
 <div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed. The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users’ taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.</p>
+<p><em>Result can be found in best_model_odds_ratio.txt &amp; best_model_prob.txt</em></p>
+</div>
+<div id="conclusion-1" class="section level2">
 <h2>Conclusion</h2>
 <p>(about 350 words) – 0.7 POINTS What were your topic and research questions again? (1 sentence)</p>
 <p>What did you learn from the two analysis you run? *** most important point to address 0.5 POINTS here</p>

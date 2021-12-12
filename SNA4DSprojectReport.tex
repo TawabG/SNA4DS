@@ -37,7 +37,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Netflix case study: Genre vs decade},
+  pdftitle={Genre vs year: analysis and evaluation of netflix winter 2001-2002 dataset},
   pdfauthor={Alan Kreher, Chantal van de Luijtgaarden, Dion Verschuren, Dylan van Wonderen, Suzanne Ekhart, \& Tawab Ghorbandi},
   pdflang={en-EN},
   pdfkeywords={keywords},
@@ -148,7 +148,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\title{Netflix case study: Genre vs decade}
+\title{Genre vs year: analysis and evaluation of netflix winter 2001-2002 dataset}
 \author{Alan Kreher\textsuperscript{}, Chantal van de Luijtgaarden\textsuperscript{}, Dion Verschuren\textsuperscript{}, Dylan van Wonderen\textsuperscript{}, Suzanne Ekhart\textsuperscript{}, \& Tawab Ghorbandi\textsuperscript{}}
 \date{}
 
@@ -410,70 +410,70 @@ Also, it very interesting to see that liking movies says more about which movies
 
 (about 1000) -- 2.5 POINTS
 
-\begin{itemize}
+\emph{What are the effects of the genre and release date on two movies being liked by one user?}
+In order to answer this research question, an ERGM model has been used. The network created consists of movies as nodes. Two movies get an undirected edge if at least one user exists that has watched and liked both movies. An important assumption that is made is that a user liked a movie if the user has given a rating of at least four out of five. Next, in order to assess the influence of the release date, the decade of the release date is used. Furthermore, only the main genre of the movies have been used to assess the influence of two movies being watched by one user.
+
+Homophily is hypothesized for genre and decade. Two movies with the same genre are more likely to have an edge and two movies from the same release decade are more likely to have an edge. Furthermore, the likeliness of an edge is even bigger when a movie has both the same genre and is from the same decade. To measure homophily the ERGM term Nodematch has been used.
+
+\hypertarget{ergm-models}{%
+\paragraph{ERGM Models}\label{ergm-models}}
+
+A total of 18 ERGM models have been constructed with 9 different ERGM terms. These terms are a selection of most popular nodal covariate terms. Such as Nodecov, Absdiff, Nodefactor, Nodematch and Nodemix. A mixture of ERGM terms were required due to the difference in categorical and continuous variables. I.e. decade year and genre. The results from all models can be seen in the figure below.
+
+\includegraphics{ergm_result/model_result1.jpeg}
+\includegraphics{ergm_result/model_result2.jpeg}
+\includegraphics{ergm_result/model_result3.jpeg}
+\includegraphics{ergm_result/model_result4.jpeg}
+\emph{Additonally, this model output can be found in directory ``root/ergm\_result/models.html.''}
+
+In order to find the best performing model, two model selection criteras have been used. The Akaike's Information Critera (AIC) and Bayesian Information Criteria (BIC). The AIC tries to measure high dimensional reality, while BIC selects model among a class of parametric models with different numbers of parameters (mainly in the domain of underfitting).
+As can be seen from the figure, model 2, 3 and 4 yield the lowest AIC and BIC scores.
+
+The best performing was then used as input for the MCMC diagnostics and ERGM Goodness Of Fit.
+
+Estimate parameters using Markov Chains Monte Carlo simulations. A Markov chain is a sequence of random variables that depends upon the value taken by the previous variable. This method then generates a series of graphs that differs from each other by only one edge.
+The sequence of generated graphs, i.e.~plots of Markov Chains Monte Carlo diagnostics are seen below.
+
+\includegraphics{ergm_result/mcmc_diagnostics_1.png}
+\includegraphics{ergm_result/mcmc_diagnostics_2.png}
+\includegraphics{ergm_result/mcmc_diagnostics_3.png}
+
+\hypertarget{goodness-of-fit-nog-afmaken}{%
+\paragraph{Goodness of Fit (NOG AFMAKEN!!)}\label{goodness-of-fit-nog-afmaken}}
+
+Goodness of fit calculates p-values for geodesic distance, degree, and reachability summaries to diagnose the goodness-of-fit of exponential family random graph models (Source: \url{https://cran.r-project.org/web/packages/ergm/ergm.pdf}).
+
+The output is composed of 4 Parts:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
-  Present your results appropriately (plots, tables\ldots) and discuss your findings
-  in plain English
+  Goodness-of-fit for degree
 \item
-  Discuss the meaning of your findings in relation to your hypothesis. (half of
-  the points evaluated in this other part)
-\end{itemize}
+  Goodness-of-fit for edgewise shared partner
+\item
+  Goodness-of-fit for minimum geodesic distance
+\item
+  Goodness-of-fit for model statistics
+\end{enumerate}
 
-Option 1:
+As can be seen from the result\ldots{}
 
-\begin{tabular}{l|l}
-\hline
- & Model 1\\
-\hline
-(Intercept) & 5.03 ***\\
-\hline
- & (0.22)\\
-\hline
-groupTrt & -0.37\\
-\hline
- & (0.31)\\
-\hline
-R\textasciicircum{}2 & 0.07\\
-\hline
-Adj. R\textasciicircum{}2 & 0.02\\
-\hline
-Num. obs. & 20\\
-\hline
-\end{tabular}
+\hypertarget{odds-ratio-probabilities}{%
+\paragraph{Odds Ratio \& Probabilities}\label{odds-ratio-probabilities}}
 
-Option 2
+An increase of one number of edges, decreased the log odds with -0.678. And it makes the odds of the effect 0.508 times larger. Odds ratio is below the 1 threshold, which means that there is a lower offs of forming edges in this network.
 
-\begin{tabular}{l|l|l}
-\hline
- & Model 1 & Model 2\\
-\hline
-(Intercept) & 5.03 *** & \\
-\hline
- & (0.22) & \\
-\hline
-groupTrt & -0.37 & 4.66 ***\\
-\hline
- & (0.31) & (0.22)\\
-\hline
-groupCtl &  & 5.03 ***\\
-\hline
- &  & (0.22)\\
-\hline
-R\textasciicircum{}2 & 0.07 & 0.98\\
-\hline
-Adj. R\textasciicircum{}2 & 0.02 & 0.98\\
-\hline
-Num. obs. & 20 & 20\\
-\hline
-\end{tabular}
+Additionally, for each decade year (10,20,30,40,50,60,70 and 80) the log odds increases with approximately 1.137. The odds of the effect increases accordingly to above the 1 threshold. Therefore it is concluded that having a movie made in a later year has a greater odds of multiple users rating the movie.
 
-Option 3
+The best performing model has a 3.3\% prob. of forming edges. However, decade 70 has 59\% of forming an edge and decade 80, 78\%. Which is consistent with the OR result.
 
-\includegraphics{SNA4DSprojectReport_files/figure-latex/model 3-1.pdf}
+\hypertarget{ergm-conclusion}{%
+\paragraph{ERGM Conclusion}\label{ergm-conclusion}}
 
-Option 4
-
-\includegraphics{SNA4DSprojectReport_files/figure-latex/model 4-1.pdf}
+It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed.
+The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users' taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.
 
 \hypertarget{conclusion}{%
 \subsection{Conclusion}\label{conclusion}}
