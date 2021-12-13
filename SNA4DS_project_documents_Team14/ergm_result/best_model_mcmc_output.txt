@@ -1,0 +1,103 @@
+Sample statistics summary:
+
+Iterations = 14221312:57868288
+Thinning interval = 65536 
+Number of chains = 1 
+Sample size per chain = 667 
+
+1. Empirical mean and standard deviation for each variable,
+   plus standard error of the mean:
+
+                     Mean      SD Naive SE Time-series SE
+edges              6.2774 167.683   6.4927        10.3665
+absdiff.decade.10  9.0660  99.752   3.8624         6.4283
+absdiff.decade.20  1.4213  62.356   2.4144         3.5437
+absdiff.decade.30 -3.9190  52.953   2.0503         3.1630
+absdiff.decade.40 -8.4813  43.452   1.6825         2.9397
+absdiff.decade.50  5.0870  26.122   1.0115         1.6208
+absdiff.decade.60 -0.9805  17.152   0.6641         1.0354
+absdiff.decade.70 -0.2924  10.772   0.4171         0.6790
+absdiff.decade.80 -0.6747   4.735   0.1833         0.3594
+
+2. Quantiles for each variable:
+
+                     2.5%    25% 50%   75%  97.5%
+edges             -307.00 -117.0   5 120.5 360.05
+absdiff.decade.10 -182.70  -61.5  10  74.5 209.00
+absdiff.decade.20 -130.70  -38.5   4  42.0 122.35
+absdiff.decade.30 -110.00  -39.0  -2  33.0  93.35
+absdiff.decade.40  -87.00  -38.5 -10  22.0  77.35
+absdiff.decade.50  -49.00  -12.0   4  22.5  57.35
+absdiff.decade.60  -36.00  -13.0   0  10.5  31.00
+absdiff.decade.70  -20.35   -8.0   0   7.0  21.00
+absdiff.decade.80  -10.00   -4.0  -1   2.0   8.00
+
+
+Are sample statistics significantly different from observed?
+               edges absdiff.decade.10 absdiff.decade.20 absdiff.decade.30 absdiff.decade.40 absdiff.decade.50
+diff.      6.2773613         9.0659670         1.4212894        -3.9190405      -8.481259370       5.086956522
+test stat. 0.6055450         1.4103265         0.4010801        -1.2390326      -2.885104564       3.138462144
+P-val.     0.5448169         0.1584433         0.6883612         0.2153334       0.003912837       0.001698369
+           absdiff.decade.60 absdiff.decade.70 absdiff.decade.80 Overall (Chi^2)
+diff.             -0.9805097        -0.2923538       -0.67466267              NA
+test stat.        -0.9470060        -0.4305529       -1.87706829    3.114676e+01
+P-val.             0.3436357         0.6667935        0.06050874    7.289952e-04
+
+Sample statistics cross-correlations:
+                       edges absdiff.decade.10 absdiff.decade.20 absdiff.decade.30 absdiff.decade.40
+edges             1.00000000       0.617648564       0.353385648       0.430540597       0.296038957
+absdiff.decade.10 0.61764856       1.000000000       0.021421075       0.103647352      -0.010289459
+absdiff.decade.20 0.35338565       0.021421075       1.000000000       0.028321852      -0.001248963
+absdiff.decade.30 0.43054060       0.103647352       0.028321852       1.000000000       0.100967054
+absdiff.decade.40 0.29603896      -0.010289459      -0.001248963       0.100967054       1.000000000
+absdiff.decade.50 0.16850162      -0.016827389      -0.096903982       0.014450337       0.055855601
+absdiff.decade.60 0.16175483       0.052299112      -0.020025594       0.006356335       0.048583829
+absdiff.decade.70 0.13327815       0.006413570       0.070467609       0.096017300      -0.084372838
+absdiff.decade.80 0.07629096       0.004828044       0.011491515       0.026604621       0.018621045
+                  absdiff.decade.50 absdiff.decade.60 absdiff.decade.70 absdiff.decade.80
+edges                    0.16850162       0.161754827        0.13327815       0.076290959
+absdiff.decade.10       -0.01682739       0.052299112        0.00641357       0.004828044
+absdiff.decade.20       -0.09690398      -0.020025594        0.07046761       0.011491515
+absdiff.decade.30        0.01445034       0.006356335        0.09601730       0.026604621
+absdiff.decade.40        0.05585560       0.048583829       -0.08437284       0.018621045
+absdiff.decade.50        1.00000000      -0.037801676        0.02422508       0.012299353
+absdiff.decade.60       -0.03780168       1.000000000        0.03807117       0.019649344
+absdiff.decade.70        0.02422508       0.038071171        1.00000000      -0.051328882
+absdiff.decade.80        0.01229935       0.019649344       -0.05132888       1.000000000
+
+Sample statistics auto-correlation:
+Chain 1 
+                 edges absdiff.decade.10 absdiff.decade.20 absdiff.decade.30 absdiff.decade.40
+Lag 0       1.00000000       1.000000000        1.00000000        1.00000000        1.00000000
+Lag 65536   0.43589131       0.468898952        0.44581575        0.40762055        0.50596420
+Lag 131072  0.16759858       0.183364843        0.12105560        0.17689040        0.24451715
+Lag 196608  0.08381843       0.036316114        0.04181609        0.02225613        0.09567932
+Lag 262144  0.02370775      -0.008768223        0.04825753       -0.04962250        0.05498495
+Lag 327680 -0.00452669      -0.051161384        0.05427926       -0.01810433        0.05138774
+           absdiff.decade.50 absdiff.decade.60 absdiff.decade.70 absdiff.decade.80
+Lag 0             1.00000000        1.00000000        1.00000000        1.00000000
+Lag 65536         0.43884862        0.41636552        0.50258259        0.63918387
+Lag 131072        0.15652522        0.18357403        0.20263740        0.41534141
+Lag 196608        0.08154182        0.13638614        0.08738744        0.27102135
+Lag 262144        0.01951612        0.10194551        0.07966138        0.11775131
+Lag 327680       -0.04433441        0.04697872        0.07982251        0.01127671
+
+Sample statistics burn-in diagnostic (Geweke):
+Chain 1 
+
+Fraction in 1st window = 0.1
+Fraction in 2nd window = 0.5 
+
+            edges absdiff.decade.10 absdiff.decade.20 absdiff.decade.30 absdiff.decade.40 absdiff.decade.50 
+           0.6194            0.8181            0.8756            2.4163            0.9776            0.3034 
+absdiff.decade.60 absdiff.decade.70 absdiff.decade.80 
+          -0.2530           -1.4432           -1.4796 
+
+Individual P-values (lower = worse):
+            edges absdiff.decade.10 absdiff.decade.20 absdiff.decade.30 absdiff.decade.40 absdiff.decade.50 
+       0.53565265        0.41330951        0.38126734        0.01567927        0.32825662        0.76156777 
+absdiff.decade.60 absdiff.decade.70 absdiff.decade.80 
+       0.80025009        0.14895124        0.13896971 
+Joint P-value (lower = worse):  0.3818899 .
+
+MCMC diagnostics shown here are from the last round of simulation, prior to computation of final parameter estimates. Because the final estimates are refinements of those used for this simulation run, these diagnostics may understate model performance. To directly assess the performance of the final model on in-model statistics, please use the GOF command: gof(ergmFitObject, GOF=~model)
