@@ -2,17 +2,23 @@
 title: 'Genre vs year: analysis and evaluation of the Netflix winter 2001-2002 dataset'
 author:
 - name: Alan Kreher
+  affiliation   : "1,2,3"
 - name: Chantal van de Luijtgaarden
+  affiliation   : "1,2,3"
 - name: Dion Verschuren
+  affiliation   : "1,2,3"
 - name: Dylan van Wonderen
+  affiliation   : "1,2,3"
 - name: Suzanne Ekhart
+  affiliation   : "4"
 - name: Tawab Ghorbandi
+  affiliation   : "1,2,3"
 shorttitle: "SNA4DS Research Project Report - Team 14"
 output:
+  papaja::apa6_pdf: default
   html_document:
     df_print: paged
-  pdf_document: default
-  papaja::apa6_pdf: default
+
 keywords: keywords
 wordcount: X
 bibliography: r-references.bib
@@ -105,7 +111,7 @@ During this study, the data that was shared by Netflix during the Netflix Prize 
 
 The data consisted of movies and account holders on Netflix who rated the movies on a 5 point scale. Also, the date the rating that was given and the year of the movie release are included in the dataset. Data was collected between October 1998 and December 2005 and the data consists of all ratings that were given during this period [@netflix_2019]. The initial dataset contains about 24 million ratings from over 480k users on almost 18k movies. [@takacs2008matrix]
 
-For the movies, the dataset only contains the title of the movie and the year it was released. This was too little information about the movies for our project. Therefore, we decided to look for an additional data source to enrich the dataset. We used Amazon Prime movie genres to add genres to the dataset for further analysis.
+For the movies, the dataset only contains the title of the movie and the year it was released. This was too little information about the movies for our project. Therefore, we decided to look for an additional data source to enrich the dataset. We used Amazon Prime movie genres to add genres to the dataset for further analysis. This data was collected on our own by looking up every movie separately in the Amazon Prime database, and retrieving the genre. 
 
 The large size of the dataset made it difficult to work with and made running analysis models infeasable. Therefore, we decided to only use a selection of the ratings. The dataset has ratings from October 1998 to December 2005. For this analysis, only the data from December 2001, Januari 2002, and februari 2002 are considered. We chose this winter because this is the first time where users started to rate a good amount of movies while the number of ratings still did not completely explode yet.
 
@@ -183,7 +189,7 @@ ggplot(data_genres, aes(genre)) +
 ### Data analysis (Research Rationale)
 
 #### QAP
-In general, QAP is very interesting, when you have two or more networks and wants to compare those. In addition, we also choose QAP regression, since we thought it would be interesting to use this model, based on its permutation of actually observed graphs and therefore staying closer to the nature of our networks. 
+In general, QAP is very interesting, when you have two or more networks and want to compare those. In addition, we also choose QAP regression, since we thought it would be interesting to use this model, based on its permutation of actually observed graphs and therefore staying closer to the nature of our networks. 
 
 There are three different QAP models from which one had to be chosen for our data and research question. The first is the simple QAP test where you measure the association between two networks. Furthermore, there is a QAP linear model, which can be used on a valued dependent network and one or more explanatory networks. Finally, there is the QAP logistic model, which differs from the linear model, in terms of a binary-valued dependent network. 
 
@@ -205,7 +211,7 @@ Exponential Random Graph models (ERGM) is a powerful technique for conducting st
 #### Constructing data and the model
 During preprocessing of the data, an interesting artifact was encountered; When users were removed from the dataset that either liked or disliked a movie, it was clearly shown that it occurred much more often that user gave a 4/5 star rating to a movie than a 1/2 star rating. This is interesting to keep in mind, as this might pose a potential bias in the dataset.
 
-To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = \frac{no. of mutual liked movies}{max(no. of liked movies)}$
+To give a weight to the edges in terms of importance, we calculate the weight according to a formula: $weight = roundup((\frac{no. of mutual liked movies}{max(no. of liked movies)})*100)$
 
 #### Results
 We have generated results for different (filtered) versions of the dataset. The results are explained and shown below.
@@ -243,7 +249,7 @@ For the last time, we decreased the filter threshold for the number of ratings t
 knitr::include_graphics("results60plus.png")
 ```
 
-As can be seen from the figure, the QAP regression model explains 17% of the variation in the like/dislike interaction network for movies when looking at liked movie ratings. When looking at disliked movie ratings, the model can explain 13% of the variation. Th finally gave us the feeling that we are building somewhat meaningful models. 
+As can be seen from the figure, the QAP regression model explains 17% of the variation in the like/dislike interaction network for movies when looking at liked movie ratings. When looking at disliked movie ratings, the model can explain 13% of the variation. This finally gave us the feeling that we are building somewhat meaningful models. 
 
 We even wanted to go a step further and decrease the filter threshold for the number of ratings that users have given to 40. But this would yield a dataset that was too large to analyse, as it costs 25+ hours to run an analysis on it. 
  
@@ -425,20 +431,13 @@ For the QAP model on the Netflix dataset the following research question was ans
 
 Netflix could have benefited from the insights derived by the research for their recommender systems back then. Even though old data is used, this could be replicated for more recent data. The insights gained were that networks on more enthusiastic reviewers do not give a clearer picture of their movie's taste. In addition, liking movies says more about which movies are possibly disliked, than vice versa.  
 
-**What does remain an open problem?**
-
-What remains an open problem would be to combine the movie genres in the user networks to give extra insights, connected to the first research question.
-
 ### ERGM
 It appeared that both genre and decade affected the existence of an edge between nodes, hence confirming genre and decade as predictors for movies being liked by an individual. Furthermore, it became clear that adding terms to an ERGM can significantly improve results. By combining ERGM terms like Nodefactor, Nodematch, Nodecov, Absdiff and Nodemix, the best result was obtained. Therefore, the hypothesis was confirmed. 
 The results are valuable for movie streaming services. By confirming that users that liked a movie, will be likely to also like movies from the same decade or genre, recommender systems can be improved. The results provide new insights in users’ taste of movies, which can be used by recommender systems to give better movie recommendations. For example, recommender systems could give recommendation towards movies, equal in decade or genre of previously liked movies.
 
+### What does remain an open problem?
 
-
-**What does remain an open problem?**
-
-What remains an open problem, is that we assume that a frequent reviewer gives a rating to a movie after watching it. However, we don’t have information on (re-)viewers that watch a movie but don’t give a rating afterwards. This is difficult to overcome as we simply don’t have data available on this matter.  
-
+What remains an open problem would be to combine the movie genres in the user networks to give extra insights, connected to the first research question. Also, is that we assume that a frequent reviewer gives a rating to a movie after watching it. However, we don’t have information on (re-)viewers that watch a movie but don’t give a rating afterwards. This is difficult to overcome as we simply don’t have data available on this matter.  
 
 ### Future work
 
